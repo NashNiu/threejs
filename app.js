@@ -20,6 +20,23 @@ window.addEventListener('resize', () => {
     camera.aspect = size.width / size.height;
     camera.updateProjectionMatrix();
 });
+window.addEventListener('dblclick', () => {
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+    // fullscreen
+    if (!fullscreenElement) {
+        if (canvasDom.requestFullscreen) {
+            canvasDom.requestFullscreen();
+        } else if (canvasDom.webkitRequestFullscreen) {
+            canvasDom.webkitRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+});
 const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 0.1, 100);
 const controls = new OrbitControls(camera, document.querySelector('.webgl'));
 controls.enableDamping = true;
