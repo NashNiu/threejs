@@ -1,10 +1,25 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import GUI from 'lil-gui';
+import gsap from 'gsap';
+const params = {
+    materialColor: 0x00ff00,
+    spin: () => {
+        gsap.to(cube.rotation, { y: cube.rotation.y + Math.PI * 2, duration: 1 });
+    }
+};
+const gui = new GUI();
 const scene = new THREE.Scene();
-const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: params.materialColor });
 const cube = new THREE.Mesh(geometry, material);
+gui.add(cube.position, 'y', -5, 5, 0.1).name('Cube Y Position');
 
+gui.add(material, 'wireframe').name('Wireframe Mode');
+gui.addColor(params, 'materialColor').name('Cube Color').onChange(() => {
+    material.color.set(params.materialColor);
+});
+gui.add(params, 'spin').name('Spin Cube');
 scene.add(cube);
 const size = {
     width: window.innerWidth,
