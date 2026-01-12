@@ -10,6 +10,33 @@ const size = {
     width: window.innerWidth,
     height: window.innerHeight
 };
+window.addEventListener('resize', () => {
+    size.width = window.innerWidth;
+    size.height = window.innerHeight;
+    // Update renderer
+    renderer.setSize(size.width, size.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Update camera
+    camera.aspect = size.width / size.height;
+    camera.updateProjectionMatrix();
+});
+window.addEventListener('dblclick', () => {
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+    // fullscreen
+    if (!fullscreenElement) {
+        if (canvasDom.requestFullscreen) {
+            canvasDom.requestFullscreen();
+        } else if (canvasDom.webkitRequestFullscreen) {
+            canvasDom.webkitRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+});
 const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 0.1, 100);
 const controls = new OrbitControls(camera, document.querySelector('.webgl'));
 controls.enableDamping = true;
@@ -19,6 +46,7 @@ camera.lookAt(cube.position);
 const canvasDom = document.querySelector('.webgl');
 const renderer = new THREE.WebGLRenderer({ canvas: canvasDom });
 renderer.setSize(size.width, size.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const tick = () => {
     controls.update();
