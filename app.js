@@ -1,8 +1,26 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const scene = new THREE.Scene();
-const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
+
+const geometry = new THREE.BufferGeometry();
+// const positions = new Float32Array([
+//     0, 0, 0,
+//     0, 1, 0,
+//     1, 0, 0,
+// ]);
+// const positionAttribute = new THREE.BufferAttribute(positions, 3);
+
+// geometry.setAttribute('position', positionAttribute);
+const count = 5000;
+const positionArray = new Float32Array(count * 3 * 3);
+for (let i = 0; i < count * 3 * 3; i++) {
+    positionArray[i] = (Math.random() - 0.5) * 4;
+}
+const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+geometry.setAttribute('position', positionAttribute);
+
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 const cube = new THREE.Mesh(geometry, material);
 
 scene.add(cube);
