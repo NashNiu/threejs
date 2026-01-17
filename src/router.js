@@ -3,7 +3,8 @@ class Router {
         this.routes = {
             home: document.getElementById('home'),
             text: document.getElementById('text'),
-            about: document.getElementById('about')
+            // about: document.getElementById('about'),
+            light: document.getElementById('light')
         };
         this.navLinks = document.querySelectorAll('.nav-link');
         this.currentRoute = null;
