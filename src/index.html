@@ -13,7 +13,8 @@
             <ul class="navbar-nav">
                 <li><a href="#home" class="nav-link active" data-route="home">home</a></li>
                 <li><a href="#text" class="nav-link" data-route="text">text</a></li>
-                <li><a href="#about" class="nav-link" data-route="about">about</a></li>
+                <!-- <li><a href="#about" class="nav-link" data-route="about">about</a></li> -->
+                <li><a href="#light" class="nav-link" data-route="light">light</a></li>
             </ul>
         </nav>
         <main class="main-content">
@@ -30,8 +31,12 @@
                     <h1>Three.js demo</h1>
                 </div>
             </div>
+            <div id="light" class="page">
+                <canvas class="light_webgl"></canvas>
+            </div>
         </main>
     </div>
     <script type="module" src="./script.js"></script>
+    <script type="module" src="./light.js"></script>
 </body>
 </html>
