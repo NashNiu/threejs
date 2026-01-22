@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Timer } from "three/addons/misc/Timer.js";
+import { Sky } from 'three/addons/objects/Sky.js'
 import Router from "./router.js";
 import GUI from "lil-gui";
 
@@ -89,13 +90,13 @@ function initThreeScene() {
   roofNormalTexture.wrapS = THREE.RepeatWrapping;
 
   const bushColorTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.webp",
   );
   const bushARMTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp",
   );
   const bushNormalTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.webp",
   );
   bushColorTexture.colorSpace = THREE.SRGBColorSpace;
   bushColorTexture.repeat.set(2, 1);
@@ -124,15 +125,15 @@ function initThreeScene() {
   graveNormalTexture.repeat.set(0.3, 0.4);
 
   // door
-  const doorColorTexture = textureLoader.load("./door/color.jpg");
-  const doorAlphaTexture = textureLoader.load("./door/alpha.jpg");
+  const doorColorTexture = textureLoader.load("./door/color.webp");
+  const doorAlphaTexture = textureLoader.load("./door/alpha.webp");
   const doorAmbientOcclusionTexture = textureLoader.load(
-    "./door/ambientOcclusion.jpg",
+    "./door/ambientOcclusion.webp",
   );
-  const doorHeightTexture = textureLoader.load("./door/height.jpg");
-  const doorNormalTexture = textureLoader.load("./door/normal.jpg");
-  const doorMetalnessTexture = textureLoader.load("./door/metalness.jpg");
-  const doorRoughnessTexture = textureLoader.load("./door/roughness.jpg");
+  const doorHeightTexture = textureLoader.load("./door/height.webp");
+  const doorNormalTexture = textureLoader.load("./door/normal.webp");
+  const doorMetalnessTexture = textureLoader.load("./door/metalness.webp");
+  const doorRoughnessTexture = textureLoader.load("./door/roughness.webp");
 
   doorColorTexture.colorSpace = THREE.SRGBColorSpace;
 
@@ -364,6 +365,21 @@ function initThreeScene() {
   ghost3.shadow.mapSize.width = 256
   ghost3.shadow.mapSize.height = 256
   ghost3.shadow.camera.far = 10
+
+  /**
+   * Sky
+   */
+  const sky = new Sky()
+  sky.scale.set(100, 100, 100)
+  scene.add(sky)
+  sky.material.uniforms['turbidity'].value = 10
+  sky.material.uniforms['rayleigh'].value = 3
+  sky.material.uniforms['mieCoefficient'].value = 0.1
+  sky.material.uniforms['mieDirectionalG'].value = 0.95
+  sky.material.uniforms['sunPosition'].value.set(0.3, -0.038, -0.95)
+
+
+  scene.fog = new THREE.FogExp2('#04343f', 0.1)
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
