@@ -90,13 +90,13 @@ function initThreeScene() {
   roofNormalTexture.wrapS = THREE.RepeatWrapping;
 
   const bushColorTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.webp",
   );
   const bushARMTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp",
   );
   const bushNormalTexture = textureLoader.load(
-    "./bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg",
+    "./bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.webp",
   );
   bushColorTexture.colorSpace = THREE.SRGBColorSpace;
   bushColorTexture.repeat.set(2, 1);
@@ -125,15 +125,15 @@ function initThreeScene() {
   graveNormalTexture.repeat.set(0.3, 0.4);
 
   // door
-  const doorColorTexture = textureLoader.load("./door/color.jpg");
-  const doorAlphaTexture = textureLoader.load("./door/alpha.jpg");
+  const doorColorTexture = textureLoader.load("./door/color.webp");
+  const doorAlphaTexture = textureLoader.load("./door/alpha.webp");
   const doorAmbientOcclusionTexture = textureLoader.load(
-    "./door/ambientOcclusion.jpg",
+    "./door/ambientOcclusion.webp",
   );
-  const doorHeightTexture = textureLoader.load("./door/height.jpg");
-  const doorNormalTexture = textureLoader.load("./door/normal.jpg");
-  const doorMetalnessTexture = textureLoader.load("./door/metalness.jpg");
-  const doorRoughnessTexture = textureLoader.load("./door/roughness.jpg");
+  const doorHeightTexture = textureLoader.load("./door/height.webp");
+  const doorNormalTexture = textureLoader.load("./door/normal.webp");
+  const doorMetalnessTexture = textureLoader.load("./door/metalness.webp");
+  const doorRoughnessTexture = textureLoader.load("./door/roughness.webp");
 
   doorColorTexture.colorSpace = THREE.SRGBColorSpace;
 
