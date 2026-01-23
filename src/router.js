@@ -5,7 +5,8 @@ class Router {
       text: document.getElementById('text'),
       light: document.getElementById('light'),
       shadows: document.getElementById('shadows'),
-      house: document.getElementById('house')
+      house: document.getElementById('house'),
+      particles: document.getElementById('particles')
     }
     this.navLinks = document.querySelectorAll('.nav-link')
     this.currentRoute = null
