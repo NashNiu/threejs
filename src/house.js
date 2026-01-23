@@ -3,7 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Timer } from "three/addons/misc/Timer.js";
 import { Sky } from 'three/addons/objects/Sky.js'
 import Router from "./router.js";
-import GUI from "lil-gui";
+// import GUI from "lil-gui";
 
 const router = new Router();
 let scene, camera, renderer, controls, gui;
@@ -18,25 +18,24 @@ function initThreeScene() {
 
   const canvas = document.querySelector("canvas.house_webgl");
   if (!canvas) return;
-  gui = new GUI();
+  // gui = new GUI();
 
   scene = new THREE.Scene();
 
   const textureLoader = new THREE.TextureLoader();
 
-  const floorAlphaTexture = textureLoader.load("./floor/alpha.jpg");
-  // static\floor\coast_sand_rocks_02_1k\coast_sand_rocks_02_diff_1k.jpg
+  const floorAlphaTexture = textureLoader.load("./floor/alpha.webp");
   const floorColorTexture = textureLoader.load(
-    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.jpg",
+    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp",
   );
   const floorARMTexture = textureLoader.load(
-    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.jpg",
+    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp",
   );
   const floorNormalTexture = textureLoader.load(
-    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.jpg",
+    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp",
   );
   const floorDisplacementTexture = textureLoader.load(
-    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.jpg",
+    "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp",
   );
 
   floorColorTexture.colorSpace = THREE.SRGBColorSpace;
@@ -58,26 +57,26 @@ function initThreeScene() {
 
   //wall
   const wallColorTexture = textureLoader.load(
-    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.jpg",
+    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp",
   );
   const wallARMTexture = textureLoader.load(
-    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.jpg",
+    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp",
   );
   const wallNormalTexture = textureLoader.load(
-    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.jpg",
+    "./wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp",
   );
 
   wallColorTexture.colorSpace = THREE.SRGBColorSpace;
 
   // roof
   const roofColorTexture = textureLoader.load(
-    "./roof/roof_slates_02_1k/roof_slates_02_diff_1k.jpg",
+    "./roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp",
   );
   const roofARMTexture = textureLoader.load(
-    "./roof/roof_slates_02_1k/roof_slates_02_arm_1k.jpg",
+    "./roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp",
   );
   const roofNormalTexture = textureLoader.load(
-    "./roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.jpg",
+    "./roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp",
   );
 
   roofColorTexture.colorSpace = THREE.SRGBColorSpace;
@@ -109,13 +108,13 @@ function initThreeScene() {
 
   // Grave
   const graveColorTexture = textureLoader.load(
-    "./grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg",
+    "./grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp",
   );
   const graveARMTexture = textureLoader.load(
-    "./grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg",
+    "./grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp",
   );
   const graveNormalTexture = textureLoader.load(
-    "./grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg",
+    "./grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp",
   );
 
   graveColorTexture.colorSpace = THREE.SRGBColorSpace;
@@ -156,18 +155,18 @@ function initThreeScene() {
   floor.rotation.x = -Math.PI * 0.5;
   scene.add(floor);
 
-  gui
-    .add(floor.material, "displacementScale")
-    .min(0)
-    .max(1)
-    .step(0.01)
-    .name("displacementScale");
-  gui
-    .add(floor.material, "displacementBias")
-    .min(-1)
-    .max(1)
-    .step(0.01)
-    .name("displacementBias");
+  // gui
+  //   .add(floor.material, "displacementScale")
+  //   .min(0)
+  //   .max(1)
+  //   .step(0.01)
+  //   .name("displacementScale");
+  // gui
+  //   .add(floor.material, "displacementBias")
+  //   .min(-1)
+  //   .max(1)
+  //   .step(0.01)
+  //   .name("displacementBias");
 
   // house containers
   const house = new THREE.Group();
