@@ -1,9 +1,7 @@
 import * as THREE from 'three'
-import Router from './router.js'
 import GUI from 'lil-gui'
 import gsap from 'gsap'
 
-const router = new Router()
 
 
 let scene, camera, cameraGroup, renderer, mesh1, mesh2, mesh3, material, sectionMeshes
@@ -177,25 +175,5 @@ function startAnimation() {
         animate()
     }
 }
-
-function stopAnimation() {
-    if (animationId) {
-        window.cancelAnimationFrame(animationId)
-        animationId = null
-    }
-}
-
-function handleRouteChange() {
-    const currentRoute = router.getCurrentRoute()
-    if (currentRoute === 'scroll') {
-        setTimeout(() => {
-            initScene()
-            startAnimation()
-        }, 50)
-    } else {
-        stopAnimation()
-    }
-}
-
-window.addEventListener('hashchange', handleRouteChange)
-window.addEventListener('load', handleRouteChange)
+initScene()
+startAnimation()
