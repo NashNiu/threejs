@@ -7,7 +7,8 @@ class Router {
       shadows: document.getElementById('shadows'),
       house: document.getElementById('house'),
       particles: document.getElementById('particles'),
-      galaxy: document.getElementById('galaxy')
+      galaxy: document.getElementById('galaxy'),
+      scroll: document.getElementById('scroll')
     }
     this.navLinks = document.querySelectorAll('.nav-link')
     this.currentRoute = null
