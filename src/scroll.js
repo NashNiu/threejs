@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 import Router from './router.js'
 import GUI from 'lil-gui'
+import gsap from 'gsap'
 
 const router = new Router()
 
 
-let scene, camera, renderer, mesh1, mesh2, mesh3, material, sectionMeshes
+let scene, camera, cameraGroup, renderer, mesh1, mesh2, mesh3, material, sectionMeshes
 let animationId = null
 let isSceneInitialized = false
 let scrollY = window.scrollY
@@ -27,6 +28,7 @@ function initScene() {
     gui.addColor(params, 'materialColor').onFinishChange(() => {
         if (!material) return
         material.color.set(params.materialColor)
+        particleMaterial.color.set(params.materialColor)
     })
     if (isSceneInitialized) return
     const canvas = document.querySelector('canvas.scroll_webgl')
@@ -73,6 +75,26 @@ function initScene() {
     sectionMeshes = [mesh1, mesh2, mesh3]
 
     /**
+     * particles
+     */
+    const particleCount = 200
+    const positions = new Float32Array(particleCount * 3)
+    for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 10
+        positions[i * 3 + 1] = objectsDistance * 0.5 - objectsDistance * sectionMeshes.length * Math.random()
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 10
+    }
+    const particleGeometry = new THREE.BufferGeometry()
+    const particleMaterial = new THREE.PointsMaterial({
+        color: params.materialColor,
+        sizeAttenuation: true,
+        size: 0.02
+    })
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+    const particles = new THREE.Points(particleGeometry, particleMaterial)
+    scene.add(particles)
+    /**
      * lights
      */
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
@@ -90,17 +112,33 @@ function initScene() {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     })
 
+    let currentSection = 0
     window.addEventListener('scroll', () => {
         scrollY = window.scrollY
+        const newSection = Math.round(scrollY / sizes.height)
+        if (newSection !== currentSection) {
+            currentSection = newSection
+            gsap.to(
+                sectionMeshes[currentSection].rotation,
+                {
+                    duration: 1.5,
+                    ease: 'power3.inOut',
+                    y: '+=6',
+                    x: '+=3',
+                    z: '+=1.5'
+                })
+        }
     })
     window.addEventListener('mousemove', (e) => {
         cursor.x = e.clientX / sizes.width - 0.5
         cursor.y = e.clientY / sizes.height - 0.5
     })
 
+    cameraGroup = new THREE.Group()
     camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
     camera.position.z = 6
-    scene.add(camera)
+    cameraGroup.add(camera)
+    scene.add(cameraGroup)
 
     renderer = new THREE.WebGLRenderer({
         canvas: canvas,
@@ -113,17 +151,22 @@ function initScene() {
 }
 
 const clock = new THREE.Clock()
-
+let previousTime = 0
 function animate() {
     animationId = window.requestAnimationFrame(animate)
     const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime
+    previousTime = elapsedTime
     camera.position.y = -scrollY / sizes.height * objectsDistance
-    camera.position.x = cursor.x 
-    camera.position.y = -cursor.y 
+
+    const parallaxX = cursor.x * 0.5
+    const parallaxY = -cursor.y * 0.5
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
 
     for (const mesh of sectionMeshes) {
-        mesh.rotation.x = elapsedTime * 0.1
-        mesh.rotation.y = elapsedTime * 0.12
+        mesh.rotation.x += deltaTime * 0.1
+        mesh.rotation.y += deltaTime * 0.12
     }
 
     renderer.render(scene, camera)
