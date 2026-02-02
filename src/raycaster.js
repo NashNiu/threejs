@@ -171,7 +171,7 @@ function animate() {
         } else {
             model.scale.set(1, 1, 1)
         }
-        console.log(modelIntersects);
+        // console.log(modelIntersects);
     }
     // for (const intersect of modelIntersects) {
     //     if (intersect.object.name === 'Duck') {
