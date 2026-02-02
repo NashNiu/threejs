@@ -3,7 +3,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Router from './router.js'
 import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+// import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
 
 const router = new Router();
 
@@ -20,8 +21,9 @@ function initThreeScene() {
     const canvas = document.querySelector('canvas.environmentMap_webgl');
     if (!canvas) return;
     const gltfLoader = new GLTFLoader()
-    const cubeTextureLoader = new THREE.CubeTextureLoader()
-    const rgbeLoader = new RGBELoader()
+    // const cubeTextureLoader = new THREE.CubeTextureLoader()
+    // const rgbeLoader = new RGBELoader()
+    const exrLoader = new EXRLoader()
     /**
      * Base
      */
@@ -63,12 +65,18 @@ function initThreeScene() {
     scene.backgroundBlurriness = 0
     scene.backgroundIntensity = 1
 
-    // hdre loader
-    rgbeLoader.load('./environmentMaps/blender-2k.hdr',(environmentMap)=>{
+    // // hdre loader
+    // rgbeLoader.load('./environmentMaps/blender-2k.hdr',(environmentMap)=>{
+    //     environmentMap.mapping = THREE.EquirectangularReflectionMapping
+    //     scene.environment = environmentMap
+    //     scene.background = environmentMap
+    // })
+    exrLoader.load('./environmentMaps/nvidiaCanvas-4k.exr',(environmentMap)=>{
         environmentMap.mapping = THREE.EquirectangularReflectionMapping
         scene.environment = environmentMap
         scene.background = environmentMap
     })
+
     /**
      * Torus Knot
      */
