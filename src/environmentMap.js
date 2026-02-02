@@ -12,7 +12,7 @@ let animationId;
 let isSceneInitialized = false;
 let torusKnot;
 let guiParams = {
-    envMapIntensity: 2.5,
+    envMapIntensity: 0,
 }
 
 function initThreeScene() {
@@ -35,7 +35,7 @@ function initThreeScene() {
         scene.traverse((child) => {
             if (child.isMesh && child.material.isMeshStandardMaterial) {
                 // child.material.envMap = environmentMap
-                child.material.envMapIntensity = guiParams.envMapIntensity
+                // child.material.envMapIntensity = guiParams.envMapIntensity
             }
         })
     }
@@ -64,12 +64,10 @@ function initThreeScene() {
     scene.backgroundIntensity = 1
 
     // hdre loader
-    rgbeLoader.load('./environmentMaps/0/2k.hdr',(environmentMap)=>{
+    rgbeLoader.load('./environmentMaps/blender-2k.hdr',(environmentMap)=>{
         environmentMap.mapping = THREE.EquirectangularReflectionMapping
-
         scene.environment = environmentMap
         scene.background = environmentMap
-        console.log(environmentMap)
     })
     /**
      * Torus Knot
