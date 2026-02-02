@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Router from './router.js'
 import GUI from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
 const router = new Router();
 
@@ -9,30 +11,92 @@ let scene, camera, renderer, controls, gui;
 let animationId;
 let isSceneInitialized = false;
 let torusKnot;
+let guiParams = {
+    envMapIntensity: 2.5,
+}
 
 function initThreeScene() {
     if (isSceneInitialized) return;
     const canvas = document.querySelector('canvas.environmentMap_webgl');
     if (!canvas) return;
-
+    const gltfLoader = new GLTFLoader()
+    const cubeTextureLoader = new THREE.CubeTextureLoader()
+    const rgbeLoader = new RGBELoader()
     /**
      * Base
      */
-    // Debug
-    gui = new GUI()
-
     // Scene
     scene = new THREE.Scene()
 
+    /**
+     * update all materials
+     */
+    const updateAllMaterials = () => {
+        scene.traverse((child) => {
+            if (child.isMesh && child.material.isMeshStandardMaterial) {
+                // child.material.envMap = environmentMap
+                child.material.envMapIntensity = guiParams.envMapIntensity
+            }
+        })
+    }
+
+    // Debug
+    gui = new GUI()
+    gui.add(guiParams, 'envMapIntensity').min(0).max(10).step(0.01).onChange(() => {
+        updateAllMaterials()
+    })
+    gui.add(scene, 'backgroundBlurriness').min(0).max(1).step(0.001).onChange(updateAllMaterials)
+    gui.add(scene, 'backgroundIntensity').min(0).max(10).step(0.01)
+    /**
+     *  ENVIRONMENT MAP
+     */
+    // const environmentMap = cubeTextureLoader.load([
+    //     './environmentMaps/0/px.png',
+    //     './environmentMaps/0/nx.png',
+    //     './environmentMaps/0/py.png',
+    //     './environmentMaps/0/ny.png',
+    //     './environmentMaps/0/pz.png',
+    //     './environmentMaps/0/nz.png'
+    // ])
+    // // scene.environment = environmentMap
+    // scene.background = environmentMap
+    scene.backgroundBlurriness = 0
+    scene.backgroundIntensity = 1
+
+    // hdre loader
+    rgbeLoader.load('./environmentMaps/0/2k.hdr',(environmentMap)=>{
+        environmentMap.mapping = THREE.EquirectangularReflectionMapping
+
+        scene.environment = environmentMap
+        scene.background = environmentMap
+        console.log(environmentMap)
+    })
     /**
      * Torus Knot
      */
     torusKnot = new THREE.Mesh(
         new THREE.TorusKnotGeometry(1, 0.4, 100, 16),
-        new THREE.MeshBasicMaterial()
+        new THREE.MeshStandardMaterial({
+            roughness: 0.1,
+            metalness: 1,
+            color: 0xaaaaaa
+        })
     )
+    torusKnot.position.x = -4
     torusKnot.position.y = 4
     scene.add(torusKnot)
+
+    /**
+     * models
+     */
+    // static\models\FlightHelmet\glTF\FlightHelmet.gltf
+    const gltfModelPath = './models/FlightHelmet/glTF/FlightHelmet.gltf'
+    gltfLoader.load(gltfModelPath, (gltf) => {
+        const model = gltf.scene
+        model.scale.set(10, 10, 10)
+        scene.add(model)
+        updateAllMaterials()
+    })
 
     /**
      * Sizes
