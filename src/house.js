@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { Timer } from "three/addons/misc/Timer.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { Timer } from 'three/examples/jsm/misc/Timer.js';
 import { Sky } from 'three/addons/objects/Sky.js'
 import Router from "./router.js";
 // import GUI from "lil-gui";
@@ -389,14 +390,14 @@ function initThreeScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 
-  timer = new Timer();
+  timer = new THREE.Clock();
   isSceneInitialized = true;
 }
 
 function animate() {
   animationId = window.requestAnimationFrame(animate);
-  timer.update();
-  const elapsedTime = timer.getElapsed();
+  // timer.update();
+  const elapsedTime = timer.getElapsedTime();
   // Ghosts
   const ghost1Angle = elapsedTime * 0.5
   ghost1.position.x = Math.cos(ghost1Angle) * 4
