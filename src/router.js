@@ -11,7 +11,8 @@ class Router {
       physics: document.getElementById('physics'),
       import: document.getElementById('import'),
       raycaster: document.getElementById('raycaster'),
-      environmentMap: document.getElementById('environmentMap')
+      environmentMap: document.getElementById('environmentMap'),
+      realistic: document.getElementById('realistic'),
     }
     this.navLinks = document.querySelectorAll('.nav-link')
     this.currentRoute = null
