@@ -1,13 +1,12 @@
-import Fox from "./fox";
+import Experience from "./experience";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 export default class Camera {
   constructor() {
-    this.fox = new Fox();
-    this.sizes = this.fox.sizes;
-    this.scene = this.fox.scene;
-    this.canvas = this.fox.canvas;
-    console.log(this.fox);
+    this.experience = new Experience();
+    this.sizes = this.experience.sizes;
+    this.scene = this.experience.scene;
+    this.canvas = this.experience.canvas;
     this.setInstance();
     this.setOrbitControls();
   }
