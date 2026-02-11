@@ -1,4 +1,5 @@
-import Fox from './fox'
+import Experience from './experience'
 
 const dom  = document.querySelector('canvas.webgl')
-const fox = new Fox(dom)
+const experience = new Experience(dom)
+window.experience = experience

@@ -1,12 +1,12 @@
-import Fox from "./fox";
+import Experience from "./experience";
 import * as THREE from "three";
 export default class Renderer {
-  constructor() {
-    this.fox = new Fox();
-    this.canvas = this.fox.canvas;
-    this.scene = this.fox.scene;
-    this.sizes = this.fox.sizes;
-    this.camera = this.fox.camera;
+  constructor() { 
+    this.experience = new Experience();
+    this.canvas = this.experience.canvas;
+    this.scene = this.experience.scene;
+    this.sizes = this.experience.sizes;
+    this.camera = this.experience.camera;
     this.setInstance();
   }
   setInstance() {
