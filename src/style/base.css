@@ -32,13 +32,28 @@ body {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.navbar-nav {
-  display: flex;
+.navbar-brand:hover {
+  opacity: 0.8;
+}
+
+.content-nav {
+  margin-top: 2rem;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
   list-style: none;
-  gap: 2rem;
-  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .nav-link {
@@ -47,15 +62,22 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: all 0.3s ease;
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  color: #fff;
 }
 
 .nav-link.active {
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
   font-weight: bold;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .main-content {
@@ -82,6 +104,7 @@ body {
   height: 100%;
   padding: 2rem;
   text-align: center;
+  overflow-y: auto;
 }
 
 .page-content h1 {
