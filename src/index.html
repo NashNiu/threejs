@@ -10,66 +10,70 @@
   <body>
     <div class="app">
       <nav class="navbar">
-        <!-- <div class="navbar-brand">Three.js Demo</div> -->
-        <ul class="navbar-nav">
-          <li>
-            <a href="#home" class="nav-link active" data-route="home">home</a>
-          </li>
-          <li><a href="#text" class="nav-link" data-route="text">text</a></li>
-          <!-- <li><a href="#about" class="nav-link" data-route="about">about</a></li> -->
-          <li>
-            <a href="#light" class="nav-link" data-route="light">light</a>
-          </li>
-          <li>
-            <a href="#shadows" class="nav-link" data-route="shadows">shadows</a>
-          </li>
-          <li>
-            <a href="#house" class="nav-link" data-route="house">house</a>
-          </li>
-          <li>
-            <a href="#particles" class="nav-link" data-route="particles"
-              >particles</a
-            >
-          </li>
-          <li>
-            <a href="#galaxy" class="nav-link" data-route="galaxy">galaxy</a>
-          </li>
-          <li>
-            <a href="/scroll.html" class="nav-link">scroll</a>
-          </li>
-          <li>
-            <a href="#physics" class="nav-link" data-route="physics">physics</a>
-          </li>
-          <li>
-            <a href="#import" class="nav-link" data-route="import">import</a>
-          </li>
-          <li>
-            <a href="#raycaster" class="nav-link" data-route="raycaster"
-              >raycaster</a
-            >
-          </li>
-          <li>
-            <a
-              href="#environmentMap"
-              class="nav-link"
-              data-route="environmentMap"
-              >environmentMap</a
-            >
-          </li>
-          <li>
-            <a href="#realistic" class="nav-link" data-route="realistic"
-              >realistic</a
-            >
-          </li>
-          <li>
-            <a href="/fox/index.html" class="nav-link">fox</a>
-          </li>
-        </ul>
+        <a href="#home" class="navbar-brand">Three.js Demo</a>
       </nav>
       <main class="main-content">
         <div id="home" class="page active">
           <div class="page-content">
             <h1>Welcome Three.js demo</h1>
+            <nav class="content-nav">
+              <ul class="nav-grid">
+                <li>
+                  <a href="#home" class="nav-link active" data-route="home">home</a>
+                </li>
+                <li><a href="#text" class="nav-link" data-route="text">text</a></li>
+                <li>
+                  <a href="#light" class="nav-link" data-route="light">light</a>
+                </li>
+                <li>
+                  <a href="#shadows" class="nav-link" data-route="shadows">shadows</a>
+                </li>
+                <li>
+                  <a href="#house" class="nav-link" data-route="house">house</a>
+                </li>
+                <li>
+                  <a href="#particles" class="nav-link" data-route="particles"
+                    >particles</a
+                  >
+                </li>
+                <li>
+                  <a href="#galaxy" class="nav-link" data-route="galaxy">galaxy</a>
+                </li>
+                <li>
+                  <a href="/scroll.html" class="nav-link">scroll</a>
+                </li>
+                <li>
+                  <a href="#physics" class="nav-link" data-route="physics">physics</a>
+                </li>
+                <li>
+                  <a href="#import" class="nav-link" data-route="import">import</a>
+                </li>
+                <li>
+                  <a href="#raycaster" class="nav-link" data-route="raycaster"
+                    >raycaster</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#environmentMap"
+                    class="nav-link"
+                    data-route="environmentMap"
+                    >environmentMap</a
+                  >
+                </li>
+                <li>
+                  <a href="#realistic" class="nav-link" data-route="realistic"
+                    >realistic</a
+                  >
+                </li>
+                <li>
+                  <a href="/fox/index.html" class="nav-link">fox</a>
+                </li>
+                <li>
+                  <a href="#shader" class="nav-link" data-route="shader">shader</a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
         <div id="text" class="page">
@@ -110,6 +114,9 @@
         <div id="realistic" class="page">
           <canvas class="realistic_webgl"></canvas>
         </div>
+        <div id="shader" class="page">
+          <canvas class="shader_webgl"></canvas>
+        </div>
       </main>
     </div>
     <script type="module" src="./text.js"></script>
@@ -123,5 +130,6 @@
     <script type="module" src="./import.js"></script>
     <script type="module" src="./environmentMap.js"></script>
     <script type="module" src="./realistic.js"></script>
+    <script type="module" src="./shader/shader.js"></script>
   </body>
 </html>
