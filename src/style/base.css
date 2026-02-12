@@ -44,11 +44,12 @@ body {
 
 .content-nav {
   margin-top: 2rem;
+  width: 100%;
 }
 
 .nav-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
   list-style: none;
   max-width: 1000px;
@@ -59,7 +60,7 @@ body {
 .nav-link {
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem .5rem;
   border-radius: 4px;
   transition: all 0.3s ease;
   display: block;
@@ -68,14 +69,14 @@ body {
 }
 
 .nav-link:hover {
-  background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+  background: linear-gradient(135deg, #c33400 0%, #7531b0 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   color: #fff;
 }
 
 .nav-link.active {
-  background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+  background: linear-gradient(135deg, #c33400 0%, #7531b0 100%);
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
