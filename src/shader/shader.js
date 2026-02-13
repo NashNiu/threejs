@@ -31,7 +31,7 @@ function initScene() {
     const material = new THREE.RawShaderMaterial({
         vertexShader: testVertexShader,
         fragmentShader: testFragmentShader,
-        wireframe: true,
+        // wireframe: true,
     })
 
     // Mesh
