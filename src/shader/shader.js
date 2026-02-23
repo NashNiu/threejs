@@ -3,13 +3,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Router from '../router.js'
 import testVertexShader from './test/vertex.glsl'
 import testFragmentShader from './test/fragment.glsl'
-
+import GUI from 'lil-gui'
 console.log(testVertexShader)
 const router = new Router()
 
-let scene, camera, renderer, mesh, controls
+let scene, camera, renderer, mesh, controls, material
 let animationId = null
 let isSceneInitialized = false
+const gui = new GUI()
 
 function initScene() {
     if (isSceneInitialized) return
@@ -21,6 +22,7 @@ function initScene() {
      * Textures
      */
     const textureLoader = new THREE.TextureLoader()
+    const flagTexture = textureLoader.load('/textures/china.png')
     /**
      * Test mesh
      */
@@ -33,15 +35,23 @@ function initScene() {
     }
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
     // Material
-    const material = new THREE.RawShaderMaterial({
+    material = new THREE.ShaderMaterial({
         vertexShader: testVertexShader,
         fragmentShader: testFragmentShader,
-        transparent: true,
-        // wireframe: true,
+        // transparent: true,
+        // wireframe: true,  
+        uniforms: {
+            uFrequency: { value: new THREE.Vector2(10, 5) },
+            uTime: { value: 0 },
+            uColor: { value: new THREE.Color('orange') },
+            uTexture: { value: flagTexture },
+        }
     })
-
+    gui.add(material.uniforms.uFrequency.value, 'x').min(0).max(20).step(0.01).name('frequencyX')
+    gui.add(material.uniforms.uFrequency.value, 'y').min(0).max(20).step(0.01).name('frequencyY')
     // Mesh
     mesh = new THREE.Mesh(geometry, material)
+    mesh.scale.y = 2 / 3
     scene.add(mesh)
 
     const sizes = {
@@ -81,6 +91,7 @@ const clock = new THREE.Clock()
 function animate() {
     animationId = window.requestAnimationFrame(animate)
     const elapsedTime = clock.getElapsedTime()
+    material.uniforms.uTime.value = elapsedTime
 
     renderer.render(scene, camera)
     // Update controls
