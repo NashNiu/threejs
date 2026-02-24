@@ -10,6 +10,7 @@ class Router {
       galaxy: document.getElementById('galaxy'),
       physics: document.getElementById('physics'),
       shader: document.getElementById('shader'),
+      shader1: document.getElementById('shader1'),
       import: document.getElementById('import'),
       raycaster: document.getElementById('raycaster'),
       environmentMap: document.getElementById('environmentMap'),
