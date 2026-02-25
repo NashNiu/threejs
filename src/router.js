@@ -15,6 +15,7 @@ class Router {
       raycaster: document.getElementById('raycaster'),
       environmentMap: document.getElementById('environmentMap'),
       realistic: document.getElementById('realistic'),
+      ragingSea: document.getElementById('ragingSea'),
     }
     this.navLinks = document.querySelectorAll('.nav-link')
     this.currentRoute = null
