@@ -64,7 +64,7 @@ gui.add(waterMaterial.uniforms.uSmallWavesFrequency, 'value').min(0).max(30).ste
 gui.add(waterMaterial.uniforms.uSmallWavesSpeed, 'value').min(0).max(4).step(0.01).name('uSmallWavesSpeed')
 gui.add(waterMaterial.uniforms.uSmallWavesIterations, 'value').min(0).max(10).step(1.0).name('uSmallWavesIterations')
 
-
+// TODO fog edge
 
 gui.addColor(debugObject, 'depthColor').onChange(() => {
     waterMaterial.uniforms.uDepthColor.value.set(debugObject.depthColor)
