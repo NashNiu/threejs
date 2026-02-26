@@ -206,7 +206,11 @@ function handleRouteChange() {
   } else {
     stopAnimation();
     // remove gui
-    if (gui) gui.destroy();
+    if (gui) {
+      gui.destroy();
+      gui = null;
+    }
+    isSceneInitialized = false;
   }
 }
 

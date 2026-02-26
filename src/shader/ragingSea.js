@@ -172,6 +172,7 @@ function handleRouteChange() {
             gui.destroy()
             gui = null
         }
+        isSceneInitialized = false
     }
 }
 
