@@ -4,18 +4,20 @@ import Router from '../router.js'
 import testVertexShader from './test/vertex.glsl'
 import testFragmentShader from './test/fragment.glsl'
 import GUI from 'lil-gui'
-console.log(testVertexShader)
+
 const router = new Router()
 
-let scene, camera, renderer, mesh, controls, material
+let scene, camera, renderer, mesh, controls, material, gui
 let animationId = null
 let isSceneInitialized = false
-const gui = new GUI()
 
-function initScene() {
+function initThreeScene() {
     if (isSceneInitialized) return
     const canvas = document.querySelector('canvas.shader_webgl')
     if (!canvas) return
+
+    // Debug
+    gui = new GUI()
 
     scene = new THREE.Scene()
     /**
@@ -115,11 +117,15 @@ function handleRouteChange() {
     const currentRoute = router.getCurrentRoute()
     if (currentRoute === 'shader') {
         setTimeout(() => {
-            initScene()
+            initThreeScene()
             startAnimation()
         }, 50)
     } else {
         stopAnimation()
+        if (gui) {
+            gui.destroy()
+            gui = null
+        }
     }
 }
 

@@ -1,93 +1,132 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
+import Router from '../router.js'
 import testVertexShader from './patterns/vertex.glsl'
 import testFragmentShader from './patterns/fragment.glsl'
 
-/**
- * Base
- */
-// Debug
-const gui = new GUI()
+const router = new Router()
 
-// Canvas
-const canvas = document.querySelector('canvas.shader1_webgl')
+let scene, camera, renderer, controls, gui, mesh
+let animationId = null
+let isSceneInitialized = false
 
-// Scene
-const scene = new THREE.Scene()
+function initThreeScene() {
+    if (isSceneInitialized) return
+    const canvas = document.querySelector('canvas.shader1_webgl')
+    if (!canvas) return
 
-/**
- * Test mesh
- */
-// Geometry
-const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
-console.log(geometry.attributes)
-// Material
-const material = new THREE.ShaderMaterial({
-    vertexShader: testVertexShader,
-    fragmentShader: testFragmentShader,
-    side: THREE.DoubleSide
-})
+    // Debug
+    gui = new GUI()
 
-// Mesh
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+    // Scene
+    scene = new THREE.Scene()
 
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
+    /**
+     * Test mesh
+     */
+    // Geometry
+    const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
+    
+    // Material
+    const material = new THREE.ShaderMaterial({
+        vertexShader: testVertexShader,
+        fragmentShader: testFragmentShader,
+        side: THREE.DoubleSide
+    })
 
-window.addEventListener('resize', () => {
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+    // Mesh
+    mesh = new THREE.Mesh(geometry, material)
+    scene.add(mesh)
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+    /**
+     * Sizes
+     */
+    const sizes = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    }
 
-    // Update renderer
+    window.addEventListener('resize', () => {
+        // Update sizes
+        sizes.width = window.innerWidth
+        sizes.height = window.innerHeight
+
+        // Update camera
+        camera.aspect = sizes.width / sizes.height
+        camera.updateProjectionMatrix()
+
+        // Update renderer
+        renderer.setSize(sizes.width, sizes.height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    })
+
+    /**
+     * Camera
+     */
+    // Base camera
+    camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+    camera.position.set(0.25, - 0.25, 1)
+    scene.add(camera)
+
+    // Controls
+    controls = new OrbitControls(camera, canvas)
+    controls.enableDamping = true
+
+    /**
+     * Renderer
+     */
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas
+    })
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
 
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(0.25, - 0.25, 1)
-scene.add(camera)
-
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    isSceneInitialized = true
+}
 
 /**
  * Animate
  */
-const tick = () => {
+function animate() {
+    animationId = window.requestAnimationFrame(animate)
+
     // Update controls
     controls.update()
 
     // Render
     renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
 }
 
-tick()
+function startAnimation() {
+    if (!animationId) {
+        animate()
+    }
+}
+
+function stopAnimation() {
+    if (animationId) {
+        window.cancelAnimationFrame(animationId)
+        animationId = null
+    }
+}
+
+function handleRouteChange() {
+    const currentRoute = router.getCurrentRoute()
+
+    if (currentRoute === 'shader1') {
+        setTimeout(() => {
+            initThreeScene()
+            startAnimation()
+        }, 50)
+    } else {
+        stopAnimation()
+        if (gui) {
+            gui.destroy()
+            gui = null
+        }
+    }
+}
+
+window.addEventListener('hashchange', handleRouteChange)
+window.addEventListener('load', handleRouteChange)
