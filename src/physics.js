@@ -5,7 +5,7 @@ import CANNON from 'cannon'
 import GUI from 'lil-gui'
 const router = new Router()
 
-let scene, camera, renderer, controls, world, sphereBody, sphere
+let scene, camera, renderer, controls, world, sphereBody, sphere, gui
 let animationId = null
 let isSceneInitialized = false
 let objectsToUpdate = []
@@ -26,7 +26,7 @@ function initScene() {
             hitSound.play()
         }
     }
-    const gui = new GUI()
+    gui = new GUI()
     const debugObject = {
         createSphere: () => {
             createSphere(Math.random() * 0.5, {
@@ -278,6 +278,11 @@ function handleRouteChange() {
         }, 50)
     } else {
         stopAnimation()
+        if (gui) {
+            gui.destroy()
+            gui = null
+        }
+        isSceneInitialized = false
     }
 }
 

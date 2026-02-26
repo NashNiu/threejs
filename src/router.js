@@ -16,6 +16,8 @@ class Router {
       environmentMap: document.getElementById('environmentMap'),
       realistic: document.getElementById('realistic'),
       ragingSea: document.getElementById('ragingSea'),
+      // galaxy
+      animatedGalaxy: document.getElementById('animatedGalaxy'),
     }
     this.navLinks = document.querySelectorAll('.nav-link')
     this.currentRoute = null
