@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import Router from '../router.js'
+import vertexShader from './galaxy/vertex.glsl'
+import fragmentShader from './galaxy/fragment.glsl'
 
 const router = new Router()
 
@@ -9,16 +11,17 @@ let scene, camera, renderer, controls, gui, points, geometry, material
 let animationId = null
 let isSceneInitialized = false
 
-const parameters = {}
-parameters.count = 200000
-parameters.size = 0.005
-parameters.radius = 5
-parameters.branches = 3
-parameters.spin = 1
-parameters.randomness = 0.5
-parameters.randomnessPower = 3
-parameters.insideColor = '#ff6030'
-parameters.outsideColor = '#1b3984'
+const parameters = {
+    count: 200000,
+    size: 0.005,
+    radius: 5,
+    branches: 3,
+    spin: 1,
+    randomness: 0.5,
+    randomnessPower: 3,
+    insideColor: '#ff6030',
+    outsideColor: '#1b3984',
+}
 
 function initThreeScene() {
     if (isSceneInitialized) return
@@ -48,6 +51,7 @@ function initThreeScene() {
 
         const positions = new Float32Array(parameters.count * 3)
         const colors = new Float32Array(parameters.count * 3)
+        const scales = new Float32Array(parameters.count * 1)
 
         const insideColor = new THREE.Color(parameters.insideColor)
         const outsideColor = new THREE.Color(parameters.outsideColor)
@@ -75,20 +79,30 @@ function initThreeScene() {
             colors[i3] = mixedColor.r
             colors[i3 + 1] = mixedColor.g
             colors[i3 + 2] = mixedColor.b
+
+            // Scale
+            scales[i] = Math.random() 
         }
 
+        console.log(scales)
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+        geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1))
 
         /**
          * Material
          */
-        material = new THREE.PointsMaterial({
-            size: parameters.size,
-            sizeAttenuation: true,
+        material = new THREE.ShaderMaterial({
+            // size: parameters.size,
+            // sizeAttenuation: true,
             depthWrite: false,
             blending: THREE.AdditiveBlending,
-            vertexColors: true
+            vertexColors: true,
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                uSize: { value: 8 }
+            }
         })
 
         /**
@@ -107,6 +121,7 @@ function initThreeScene() {
     gui.add(parameters, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(generateGalaxy)
     gui.addColor(parameters, 'insideColor').onFinishChange(generateGalaxy)
     gui.addColor(parameters, 'outsideColor').onFinishChange(generateGalaxy)
+    gui.add(material.uniforms.uSize, 'value').min(1).max(10).step(1).name('uSize')
 
     /**
      * Sizes
