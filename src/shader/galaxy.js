@@ -52,6 +52,7 @@ function initThreeScene() {
         const positions = new Float32Array(parameters.count * 3)
         const colors = new Float32Array(parameters.count * 3)
         const scales = new Float32Array(parameters.count * 1)
+        const randomness = new Float32Array(parameters.count * 3)
 
         const insideColor = new THREE.Color(parameters.insideColor)
         const outsideColor = new THREE.Color(parameters.outsideColor)
@@ -68,9 +69,13 @@ function initThreeScene() {
             const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
             const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
 
-            positions[i3] = Math.cos(branchAngle) * radius + randomX
-            positions[i3 + 1] = randomY
-            positions[i3 + 2] = Math.sin(branchAngle) * radius + randomZ
+            randomness[i3] = randomX
+            randomness[i3 + 1] = randomY
+            randomness[i3 + 2] = randomZ
+
+            positions[i3] = Math.cos(branchAngle) * radius
+            positions[i3 + 1] = 0.0
+            positions[i3 + 2] = Math.sin(branchAngle) * radius
 
             // Color
             const mixedColor = insideColor.clone()
@@ -88,6 +93,7 @@ function initThreeScene() {
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
         geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1))
+        geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3))
 
         /**
          * Material
@@ -101,7 +107,8 @@ function initThreeScene() {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
-                uSize: { value: 8 * renderer.getPixelRatio() }
+                uSize: { value: 30 * renderer.getPixelRatio() },
+                uTime: { value: 0 }
             }
         })
 
@@ -179,6 +186,10 @@ const clock = new THREE.Clock()
 
 function animate() {
     animationId = window.requestAnimationFrame(animate)
+    const elapsedTime = clock.getElapsedTime()
+
+    // Update material
+    material.uniforms.uTime.value = elapsedTime
 
     // Update controls
     controls.update()
