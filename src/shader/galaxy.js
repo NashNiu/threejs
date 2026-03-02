@@ -81,7 +81,7 @@ function initThreeScene() {
             colors[i3 + 2] = mixedColor.b
 
             // Scale
-            scales[i] = Math.random() 
+            scales[i] = Math.random()
         }
 
         console.log(scales)
@@ -101,7 +101,7 @@ function initThreeScene() {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
-                uSize: { value: 8 }
+                uSize: { value: 8 * renderer.getPixelRatio() }
             }
         })
 
@@ -112,7 +112,7 @@ function initThreeScene() {
         scene.add(points)
     }
 
-    generateGalaxy()
+
 
     gui.add(parameters, 'count').min(100).max(1000000).step(100).onFinishChange(generateGalaxy)
     gui.add(parameters, 'radius').min(0.01).max(20).step(0.01).onFinishChange(generateGalaxy)
@@ -121,7 +121,7 @@ function initThreeScene() {
     gui.add(parameters, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(generateGalaxy)
     gui.addColor(parameters, 'insideColor').onFinishChange(generateGalaxy)
     gui.addColor(parameters, 'outsideColor').onFinishChange(generateGalaxy)
-    gui.add(material.uniforms.uSize, 'value').min(1).max(10).step(1).name('uSize')
+    // gui.add(material.uniforms.uSize, 'value').min(1).max(10).step(1).name('uSize')
 
     /**
      * Sizes
@@ -168,6 +168,7 @@ function initThreeScene() {
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+    generateGalaxy()
     isSceneInitialized = true
 }
 
