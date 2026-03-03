@@ -17,6 +17,7 @@ export default {
         main: resolve(__dirname, "src/index.html"),
         scroll: resolve(__dirname, "src/scroll.html"),
         fox: resolve(__dirname, "src/fox/index.html"),
+        modifiedMaterial: resolve(__dirname, "src/modifiedMaterial/index.html"),
       },
     },
   },
