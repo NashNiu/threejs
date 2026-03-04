@@ -18,6 +18,7 @@ export default {
         scroll: resolve(__dirname, "src/scroll.html"),
         fox: resolve(__dirname, "src/fox/index.html"),
         modifiedMaterial: resolve(__dirname, "src/modifiedMaterial/index.html"),
+        coffeeSmoke: resolve(__dirname, "src/coffeeSmoke/index.html"),
       },
     },
   },
