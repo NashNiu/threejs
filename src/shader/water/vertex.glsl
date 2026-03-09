@@ -10,6 +10,8 @@ uniform float uSmallWavesIterations;
 
 varying float vElevation;
 
+#include <fog_pars_vertex>
+
 //	Classic Perlin 3D Noise 
 //	by Stefan Gustavson (https://github.com/stegu/webgl-noise)
 //
@@ -98,4 +100,6 @@ void main(){
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectionPosition = projectionMatrix * viewPosition;
     gl_Position = projectionPosition;
+
+    #include <fog_vertex>
 }
