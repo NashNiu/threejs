@@ -19,7 +19,7 @@ export default {
         fox: resolve(__dirname, "src/fox/index.html"),
         modifiedMaterial: resolve(__dirname, "src/modifiedMaterial/index.html"),
         coffeeSmoke: resolve(__dirname, "src/coffeeSmoke/index.html"),
-        holographic: resolve(__dirname, "src/holographic/index.html"),
+        holographic: resolve(__dirname, "src/hologramShader/index.html"),
       },
     },
   },
