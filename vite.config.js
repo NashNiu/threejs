@@ -20,6 +20,7 @@ export default {
         modifiedMaterial: resolve(__dirname, "src/modifiedMaterial/index.html"),
         coffeeSmoke: resolve(__dirname, "src/coffeeSmoke/index.html"),
         holographic: resolve(__dirname, "src/hologramShader/index.html"),
+        fireworks: resolve(__dirname, "src/fireworks/index.html"),
       },
     },
   },
