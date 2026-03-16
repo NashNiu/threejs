@@ -122,6 +122,7 @@ gltfLoader.load("/suzanne.glb", (gltf) => {
 /**
  * light helper
  */
+// directional light helper
 const directionalLightHelper = new THREE.Mesh(
   new THREE.PlaneGeometry(),
   new THREE.MeshBasicMaterial()
@@ -130,6 +131,24 @@ directionalLightHelper.material.color.setRGB(0.1, 0.1, 1.0);
 directionalLightHelper.material.side = THREE.DoubleSide;
 directionalLightHelper.position.set(0.0, 0.0, 3.0);
 scene.add(directionalLightHelper);
+
+// point light helper
+const pointLightHelper = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(0.1, 2),
+  new THREE.MeshBasicMaterial()
+);
+pointLightHelper.material.color.setRGB(1.0, 0.1, 0.1);
+pointLightHelper.position.set(0.0, 2.5, 0.0);
+scene.add(pointLightHelper);
+
+// point light helper 2
+const pointLightHelper2 = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(0.1, 2),
+  new THREE.MeshBasicMaterial()
+);
+pointLightHelper2.material.color.setRGB(0.1, 1.0, 0.5);
+pointLightHelper2.position.set(2.0, 2.0, 2.0);
+scene.add(pointLightHelper2);
 
 /**
  * Animate
