@@ -22,6 +22,7 @@ export default {
         holographic: resolve(__dirname, "src/hologramShader/index.html"),
         fireworks: resolve(__dirname, "src/fireworks/index.html"),
         lightsShading: resolve(__dirname, "src/lightsShading/index.html"),
+        ragingSea: resolve(__dirname, "src/ragingSea/index.html"),
       },
     },
   },
