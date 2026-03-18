@@ -23,6 +23,7 @@ export default {
         fireworks: resolve(__dirname, "src/fireworks/index.html"),
         lightsShading: resolve(__dirname, "src/lightsShading/index.html"),
         ragingSea: resolve(__dirname, "src/ragingSea/index.html"),
+        halftoneShading: resolve(__dirname, "src/halftoneShading/index.html"),
       },
     },
   },
