@@ -1,5 +1,6 @@
 uniform vec2 uResolution;
-
+uniform sampler2D uParticleTexture;
+varying vec3 vColor;
 void main()
 {
     // Final position
@@ -8,7 +9,12 @@ void main()
     vec4 projectedPosition = projectionMatrix * viewPosition;
     gl_Position = projectedPosition;
 
+    // picture
+    float pictureIntensity = texture(uParticleTexture, uv).r;
     // Point size
-    gl_PointSize = 0.3 * uResolution.y;
+    gl_PointSize = 0.15 * pictureIntensity * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
+
+    // Color
+    vColor = vec3(pow(pictureIntensity, 2.0));
 }
