@@ -122,6 +122,9 @@ window.addEventListener("pointermove", (event) => {
   displacement.screenCursor.y = -(event.clientY / sizes.height) * 2 + 1;
 });
 
+//texture
+displacement.texture = new THREE.CanvasTexture(displacement.canvas);
+
 /**
  * Particles
  */
@@ -140,6 +143,7 @@ const particlesMaterial = new THREE.ShaderMaterial({
     uParticleTexture: new THREE.Uniform(
       textureLoader.load("/39/picture-1.png"),
     ),
+    uDisplacementTexture: new THREE.Uniform(displacement.texture),
   },
 });
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -183,6 +187,8 @@ const tick = () => {
     glowSize,
     glowSize,
   );
+  //update texture
+  displacement.texture.needsUpdate = true;
 
   // Render
   renderer.render(scene, camera);
