@@ -25,6 +25,7 @@ export default {
         ragingSea: resolve(__dirname, "src/ragingSea/index.html"),
         halftoneShading: resolve(__dirname, "src/halftoneShading/index.html"),
         earth: resolve(__dirname, "src/earth/index.html"),
+        particlesCursor: resolve(__dirname, "src/particlesCursor/index.html"),
       },
     },
   },
