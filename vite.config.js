@@ -27,6 +27,7 @@ export default {
         earth: resolve(__dirname, "src/earth/index.html"),
         particlesCursor: resolve(__dirname, "src/particlesCursor/index.html"),
         particlesMorphing: resolve(__dirname, "src/particlesMorphing/index.html"),
+        gpgpuParticles: resolve(__dirname, "src/gpgpu/index.html"),
       },
     },
   },
