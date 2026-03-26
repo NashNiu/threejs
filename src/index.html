@@ -157,6 +157,12 @@
                     >particles Morph</a
                   >
                 </li>
+                <!-- gpgpu -->
+                 <li>
+                  <a href="/gpgpu/index.html" class="nav-link"
+                    >gpgpu</a
+                  >
+                </li>
               </ul>
             </nav>
           </div>
@@ -214,21 +220,52 @@
         </div>
       </main>
     </div>
-    <script type="module" src="./text.js"></script>
-    <script type="module" src="./light.js"></script>
-    <script type="module" src="./shadows.js"></script>
-    <script type="module" src="./house.js"></script>
-    <script type="module" src="./particles.js"></script>
-    <script type="module" src="./galaxy.js"></script>
-    <script type="module" src="./raycaster.js"></script>
-    <script type="module" src="./physics.js"></script>
-    <script type="module" src="./import.js"></script>
-    <script type="module" src="./environmentMap.js"></script>
-    <script type="module" src="./realistic.js"></script>
-    <script type="module" src="./shader/shader.js"></script>
-    <script type="module" src="./shader/patterns.js"></script>
-    <script type="module" src="./shader/ragingSea.js"></script>
-    <!-- galaxy -->
-    <script type="module" src="./shader/galaxy.js"></script>
+    <script type="module">
+      import Router from './router.js'
+      const router = new Router()
+      const loaders = {
+        text: () => import('./text.js'),
+        light: () => import('./light.js'),
+        shadows: () => import('./shadows.js'),
+        house: () => import('./house.js'),
+        particles: () => import('./particles.js'),
+        galaxy: () => import('./galaxy.js'),
+        raycaster: () => import('./raycaster.js'),
+        physics: () => import('./physics.js'),
+        import: () => import('./import.js'),
+        environmentMap: () => import('./environmentMap.js'),
+        realistic: () => import('./realistic.js'),
+        shader: () => import('./shader/shader.js'),
+        shader1: () => import('./shader/patterns.js'),
+        ragingSea: () => import('./shader/ragingSea.js'),
+        animatedGalaxy: () => import('./shader/galaxy.js'),
+      }
+      const loaded = new Set()
+      let suppressNext = false
+      async function loadForRoute(route) {
+        const load = loaders[route]
+        if (!load) return
+        if (!loaded.has(route)) {
+          try {
+            await load()
+            loaded.add(route)
+          } catch (e) {
+            console.error(e)
+          }
+        }
+        suppressNext = true
+        window.dispatchEvent(new HashChangeEvent('hashchange'))
+      }
+      function handleRoute() {
+        if (suppressNext) {
+          suppressNext = false
+          return
+        }
+        const route = window.location.hash.slice(1) || 'home'
+        loadForRoute(route)
+      }
+      window.addEventListener('hashchange', handleRoute)
+      window.addEventListener('load', handleRoute)
+    </script>
   </body>
 </html>
