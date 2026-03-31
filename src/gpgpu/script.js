@@ -6,6 +6,7 @@ import { GPUComputationRenderer } from 'three/examples/jsm/Addons.js'
 import GUI from 'lil-gui'
 import particlesVertexShader from './shaders/particles/vertex.glsl'
 import particlesFragmentShader from './shaders/particles/fragment.glsl'
+import gpGpuParticlesShader from './shaders/gpgpu/particles.glsl'
 
 /**
  * Base
@@ -89,9 +90,38 @@ baseGeometry.count = baseGeometry.instance.attributes.position.count
 /**
  * gpu computer
  */
+// set up
 const gpGpu = {}
+gpGpu.size = Math.ceil(Math.sqrt(baseGeometry.count))
+gpGpu.computation = new GPUComputationRenderer(gpGpu.size, gpGpu.size, renderer)
+
+// base particle
+const baseParticlesTexture = gpGpu.computation.createTexture()
+
+for (let i = 0; i < baseGeometry.count; i++) {
+    const i3 = i * 3
+    const i4 = i * 4
+    baseParticlesTexture.image.data[i4] = baseGeometry.instance.attributes.position.array[i3]
+    baseParticlesTexture.image.data[i4 + 1] = baseGeometry.instance.attributes.position.array[i3 + 1]
+    baseParticlesTexture.image.data[i4 + 2] = baseGeometry.instance.attributes.position.array[i3 + 2]
+    baseParticlesTexture.image.data[i4 + 3] = 0.0
+}
+
+// PARTICLES variables
+gpGpu.particlesVariable = gpGpu.computation.addVariable('uParticles', gpGpuParticlesShader, baseParticlesTexture)
+gpGpu.computation.setVariableDependencies(gpGpu.particlesVariable, [gpGpu.particlesVariable])
+
+// init 
+gpGpu.computation.init()
 
 
+// debug
+gpGpu.debug = new THREE.Mesh(
+    new THREE.PlaneGeometry(3, 3),
+    new THREE.MeshBasicMaterial({ map: gpGpu.computation.getCurrentRenderTarget(gpGpu.particlesVariable).texture })
+)
+gpGpu.debug.position.x = 3
+scene.add(gpGpu.debug)
 
 /**
  * Particles
@@ -99,7 +129,20 @@ const gpGpu = {}
 const particles = {}
 
 // Geometry
-// particles.geometry = new THREE.SphereGeometry(3)
+const particlesUvArray = new Float32Array(baseGeometry.count * 2)
+for (let y = 0; y < gpGpu.size; y++) {
+    for (let x = 0; x < gpGpu.size; x++) {
+        const i = y * gpGpu.size + x
+        const i2 = i * 2
+        const uvX = (x + 0.5) / gpGpu.size
+        const uvY = (y + 0.5) / gpGpu.size
+        particlesUvArray[i2] = uvX
+        particlesUvArray[i2 + 1] = uvY
+    }
+}
+particles.geometry = new THREE.BufferGeometry()
+particles.geometry.setDrawRange(0, baseGeometry.count)
+particles.geometry.setAttribute('aParticlesUv', new THREE.BufferAttribute(particlesUvArray, 2))
 
 // Material
 particles.material = new THREE.ShaderMaterial({
@@ -108,12 +151,13 @@ particles.material = new THREE.ShaderMaterial({
     uniforms:
     {
         uSize: new THREE.Uniform(0.4),
-        uResolution: new THREE.Uniform(new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio))
+        uResolution: new THREE.Uniform(new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio)),
+        uParticlesTexture: new THREE.Uniform()
     }
 })
 
 // Points
-particles.points = new THREE.Points(baseGeometry.instance, particles.material)
+particles.points = new THREE.Points(particles.geometry, particles.material)
 scene.add(particles.points)
 
 /**
@@ -135,6 +179,9 @@ const tick = () => {
 
     // Update controls
     controls.update()
+    // Update gpu computer
+    gpGpu.computation.compute()
+    particles.material.uniforms.uParticlesTexture.value = gpGpu.computation.getCurrentRenderTarget(gpGpu.particlesVariable).texture
 
     // Render normal scene
     renderer.render(scene, camera)
