@@ -108,12 +108,22 @@ for (let i = 0; i < baseGeometry.count; i++) {
     baseParticlesTexture.image.data[i4] = baseGeometry.instance.attributes.position.array[i3]
     baseParticlesTexture.image.data[i4 + 1] = baseGeometry.instance.attributes.position.array[i3 + 1]
     baseParticlesTexture.image.data[i4 + 2] = baseGeometry.instance.attributes.position.array[i3 + 2]
-    baseParticlesTexture.image.data[i4 + 3] = 0.0
+    baseParticlesTexture.image.data[i4 + 3] = Math.random()
 }
 
 // PARTICLES variables
 gpGpu.particlesVariable = gpGpu.computation.addVariable('uParticles', gpGpuParticlesShader, baseParticlesTexture)
 gpGpu.computation.setVariableDependencies(gpGpu.particlesVariable, [gpGpu.particlesVariable])
+
+// uniforms
+gpGpu.particlesVariable.material.uniforms.uTime = new THREE.Uniform(0)
+gpGpu.particlesVariable.material.uniforms.uDeltaTime = new THREE.Uniform(0)
+gpGpu.particlesVariable.material.uniforms.uBase = new THREE.Uniform(baseParticlesTexture)
+gpGpu.particlesVariable.material.uniforms.uFlowFieldInfluence = new THREE.Uniform(0.5)
+gpGpu.particlesVariable.material.uniforms.uFlowFieldStrength = new THREE.Uniform(2)
+gpGpu.particlesVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(0.5)
+
+
 
 // init 
 gpGpu.computation.init()
@@ -124,6 +134,7 @@ gpGpu.debug = new THREE.Mesh(
     new THREE.PlaneGeometry(3, 3),
     new THREE.MeshBasicMaterial({ map: gpGpu.computation.getCurrentRenderTarget(gpGpu.particlesVariable).texture })
 )
+gpGpu.debug.visible = false
 gpGpu.debug.position.x = 3
 scene.add(gpGpu.debug)
 
@@ -176,6 +187,11 @@ scene.add(particles.points)
  */
 gui.addColor(debugObject, 'clearColor').onChange(() => { renderer.setClearColor(debugObject.clearColor) })
 gui.add(particles.material.uniforms.uSize, 'value').min(0).max(1).step(0.001).name('uSize')
+gui.add(gpGpu.particlesVariable.material.uniforms.uFlowFieldInfluence, 'value').min(0).max(1).step(0.001).name('uFlowFieldInfluence')
+gui.add(gpGpu.particlesVariable.material.uniforms.uFlowFieldStrength, 'value').min(0).max(10).step(0.01).name('uFlowFieldStrength')
+gui.add(gpGpu.particlesVariable.material.uniforms.uFlowFieldFrequency, 'value').min(0).max(1).step(0.001).name('uFlowFieldFrequency')
+
+
 
 /**
  * Animate
@@ -190,6 +206,9 @@ const tick = () => {
 
     // Update controls
     controls.update()
+    // Update time
+    gpGpu.particlesVariable.material.uniforms.uDeltaTime.value = deltaTime
+    gpGpu.particlesVariable.material.uniforms.uTime.value = elapsedTime
     // Update gpu computer
     gpGpu.computation.compute()
     particles.material.uniforms.uParticlesTexture.value = gpGpu.computation.getCurrentRenderTarget(gpGpu.particlesVariable).texture
