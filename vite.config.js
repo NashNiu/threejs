@@ -29,6 +29,7 @@ export default {
         particlesCursor: resolve(__dirname, "src/particlesCursor/index.html"),
         particlesMorphing: resolve(__dirname, "src/particlesMorphing/index.html"),
         gpgpuParticles: resolve(__dirname, "src/gpgpu/index.html"),
+        wobblySphereShader: resolve(__dirname, "src/wobblySphereShader/index.html"),
       },
     },
   },
