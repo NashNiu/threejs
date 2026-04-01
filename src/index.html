@@ -1,271 +1,226 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <title>Three.js Demo</title>
-    <link rel="stylesheet" href="style/base.css" />
-  </head>
-  <body>
-    <div class="app">
-      <nav class="navbar">
-        <a href="#home" class="navbar-brand">Three.js Demo</a>
-      </nav>
-      <main class="main-content">
-        <div id="home" class="page active">
-          <div class="page-content">
-            <h1>Welcome Three.js demo</h1>
-            <nav class="content-nav">
-              <ul class="nav-grid">
-                <li>
-                  <a href="#home" class="nav-link active" data-route="home"
-                    >home</a
-                  >
-                </li>
-                <li>
-                  <a href="#text" class="nav-link" data-route="text">text</a>
-                </li>
-                <li>
-                  <a href="#light" class="nav-link" data-route="light">light</a>
-                </li>
-                <li>
-                  <a href="#shadows" class="nav-link" data-route="shadows"
-                    >shadows</a
-                  >
-                </li>
-                <li>
-                  <a href="#house" class="nav-link" data-route="house">house</a>
-                </li>
-                <li>
-                  <a href="#particles" class="nav-link" data-route="particles"
-                    >particles</a
-                  >
-                </li>
-                <li>
-                  <a href="#galaxy" class="nav-link" data-route="galaxy"
-                    >galaxy</a
-                  >
-                </li>
-                <li>
-                  <a href="/scroll.html" class="nav-link">scroll</a>
-                </li>
-                <li>
-                  <a href="#physics" class="nav-link" data-route="physics"
-                    >physics</a
-                  >
-                </li>
-                <li>
-                  <a href="#import" class="nav-link" data-route="import"
-                    >import</a
-                  >
-                </li>
-                <li>
-                  <a href="#raycaster" class="nav-link" data-route="raycaster"
-                    >raycaster</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#environmentMap"
-                    class="nav-link"
-                    data-route="environmentMap"
-                    >environmentMap</a
-                  >
-                </li>
-                <li>
-                  <a href="#realistic" class="nav-link" data-route="realistic"
-                    >realistic</a
-                  >
-                </li>
-                <li>
-                  <a href="/fox/index.html" class="nav-link">fox</a>
-                </li>
-                <li>
-                  <a href="#shader" class="nav-link" data-route="shader"
-                    >shader</a
-                  >
-                </li>
-                <li>
-                  <a href="#shader1" class="nav-link" data-route="shader1"
-                    >shader patterns</a
-                  >
-                </li>
-                <li>
-                  <a href="#ragingSea" class="nav-link" data-route="ragingSea"
-                    >ragingSea</a
-                  >
-                </li>
-                <!-- galaxy -->
-                <li>
-                  <a
-                    href="#animatedGalaxy"
-                    class="nav-link"
-                    data-route="animatedGalaxy"
-                    >animated galaxy</a
-                  >
-                </li>
-                <li>
-                  <a href="/modifiedMaterial/index.html" class="nav-link"
-                    >modified material</a
-                  >
-                </li>
-                <li>
-                  <a href="/coffeeSmoke/index.html" class="nav-link"
-                    >coffee smoke</a
-                  >
-                </li>
-                <li>
-                  <a href="/hologramShader/index.html" class="nav-link"
-                    >hologramShader</a
-                  >
-                </li>
-                <li>
-                  <a href="/fireworks/index.html" class="nav-link">fireworks</a>
-                </li>
-                <li>
-                  <a href="/lightsShading/index.html" class="nav-link"
-                    >lights shading</a
-                  >
-                </li>
-                <!-- ragingSea shading -->
-                <li>
-                  <a href="/ragingSea/index.html" class="nav-link"
-                    >ragingSeaShading</a
-                  >
-                </li>
-                <!-- halftone shading -->
-                <li>
-                  <a href="/halftoneShading/index.html" class="nav-link"
-                    >halftoneShading</a
-                  >
-                </li>
-                <!-- earth -->
-                <li>
-                  <a href="/earth/index.html" class="nav-link">earth</a>
-                </li>
-                <!-- particlesCursorAnimationShader -->
-                <li>
-                  <a
-                    href="/particlesCursor/index.html"
-                    class="nav-link"
-                    >particles Cursor</a
-                  >
-                </li>
-                <li>
-                  <a href="/particlesMorphing/index.html" class="nav-link"
-                    >particles Morph</a
-                  >
-                </li>
-                <!-- gpgpu -->
-                 <li>
-                  <a href="/gpgpu/index.html" class="nav-link"
-                    >gpgpu</a
-                  >
-                </li>
-              </ul>
-            </nav>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <title>Three.js Demo</title>
+  <link rel="stylesheet" href="style/base.css" />
+</head>
+
+<body>
+  <div class="app">
+    <nav class="navbar">
+      <a href="#home" class="navbar-brand">Three.js Demo</a>
+    </nav>
+    <main class="main-content">
+      <div id="home" class="page active">
+        <div class="page-content">
+          <h1>Welcome Three.js demo</h1>
+          <nav class="content-nav">
+            <ul class="nav-grid">
+              <li>
+                <a href="#home" class="nav-link active" data-route="home">home</a>
+              </li>
+              <li>
+                <a href="#text" class="nav-link" data-route="text">text</a>
+              </li>
+              <li>
+                <a href="#light" class="nav-link" data-route="light">light</a>
+              </li>
+              <li>
+                <a href="#shadows" class="nav-link" data-route="shadows">shadows</a>
+              </li>
+              <li>
+                <a href="#house" class="nav-link" data-route="house">house</a>
+              </li>
+              <li>
+                <a href="#particles" class="nav-link" data-route="particles">particles</a>
+              </li>
+              <li>
+                <a href="#galaxy" class="nav-link" data-route="galaxy">galaxy</a>
+              </li>
+              <li>
+                <a href="/scroll.html" class="nav-link">scroll</a>
+              </li>
+              <li>
+                <a href="#physics" class="nav-link" data-route="physics">physics</a>
+              </li>
+              <li>
+                <a href="#import" class="nav-link" data-route="import">import</a>
+              </li>
+              <li>
+                <a href="#raycaster" class="nav-link" data-route="raycaster">raycaster</a>
+              </li>
+              <li>
+                <a href="#environmentMap" class="nav-link" data-route="environmentMap">environmentMap</a>
+              </li>
+              <li>
+                <a href="#realistic" class="nav-link" data-route="realistic">realistic</a>
+              </li>
+              <li>
+                <a href="/fox/index.html" class="nav-link">fox</a>
+              </li>
+              <li>
+                <a href="#shader" class="nav-link" data-route="shader">shader</a>
+              </li>
+              <li>
+                <a href="#shader1" class="nav-link" data-route="shader1">shader patterns</a>
+              </li>
+              <li>
+                <a href="#ragingSea" class="nav-link" data-route="ragingSea">ragingSea</a>
+              </li>
+              <!-- galaxy -->
+              <li>
+                <a href="#animatedGalaxy" class="nav-link" data-route="animatedGalaxy">animated galaxy</a>
+              </li>
+              <li>
+                <a href="/modifiedMaterial/index.html" class="nav-link">modified material</a>
+              </li>
+              <li>
+                <a href="/coffeeSmoke/index.html" class="nav-link">coffee smoke</a>
+              </li>
+              <li>
+                <a href="/hologramShader/index.html" class="nav-link">hologramShader</a>
+              </li>
+              <li>
+                <a href="/fireworks/index.html" class="nav-link">fireworks</a>
+              </li>
+              <li>
+                <a href="/lightsShading/index.html" class="nav-link">lights shading</a>
+              </li>
+              <!-- ragingSea shading -->
+              <li>
+                <a href="/ragingSea/index.html" class="nav-link">ragingSeaShading</a>
+              </li>
+              <!-- halftone shading -->
+              <li>
+                <a href="/halftoneShading/index.html" class="nav-link">halftoneShading</a>
+              </li>
+              <!-- earth -->
+              <li>
+                <a href="/earth/index.html" class="nav-link">earth</a>
+              </li>
+              <!-- particlesCursorAnimationShader -->
+              <li>
+                <a href="/particlesCursor/index.html" class="nav-link">particles Cursor</a>
+              </li>
+              <li>
+                <a href="/particlesMorphing/index.html" class="nav-link">particles Morph</a>
+              </li>
+              <!-- gpgpu -->
+              <li>
+                <a href="/gpgpu/index.html" class="nav-link">gpgpu</a>
+              </li>
+              <!-- wobblySphereShader -->
+              <li>
+                <a href="/wobblySphereShader/index.html" class="nav-link">wobblySphere</a>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div id="text" class="page">
-          <canvas class="text_webgl"></canvas>
+      </div>
+      <div id="text" class="page">
+        <canvas class="text_webgl"></canvas>
+      </div>
+      <div id="about" class="page">
+        <div class="page-content">
+          <h1>Three.js demo</h1>
         </div>
-        <div id="about" class="page">
-          <div class="page-content">
-            <h1>Three.js demo</h1>
-          </div>
-        </div>
-        <div id="light" class="page">
-          <canvas class="light_webgl"></canvas>
-        </div>
-        <div id="shadows" class="page">
-          <canvas class="shadows_webgl"></canvas>
-        </div>
-        <div id="house" class="page">
-          <canvas class="house_webgl"></canvas>
-        </div>
-        <div id="particles" class="page">
-          <canvas class="particles_webgl"></canvas>
-        </div>
-        <div id="galaxy" class="page">
-          <canvas class="galaxy_webgl"></canvas>
-        </div>
-        <div id="physics" class="page">
-          <canvas class="physics_webgl"></canvas>
-        </div>
-        <div id="import" class="page">
-          <canvas class="import_webgl"></canvas>
-        </div>
-        <div id="raycaster" class="page">
-          <canvas class="raycaster_webgl"></canvas>
-        </div>
-        <div id="environmentMap" class="page">
-          <canvas class="environmentMap_webgl"></canvas>
-        </div>
-        <div id="realistic" class="page">
-          <canvas class="realistic_webgl"></canvas>
-        </div>
-        <div id="shader" class="page">
-          <canvas class="shader_webgl"></canvas>
-        </div>
-        <div id="shader1" class="page">
-          <canvas class="shader1_webgl"></canvas>
-        </div>
-        <div id="ragingSea" class="page">
-          <canvas class="ragingSea_webgl"></canvas>
-        </div>
-        <!-- galaxy -->
-        <div id="animatedGalaxy" class="page">
-          <canvas class="animatedGalaxy_webgl"></canvas>
-        </div>
-      </main>
-    </div>
-    <script type="module">
-      import Router from './router.js'
-      const router = new Router()
-      const loaders = {
-        text: () => import('./text.js'),
-        light: () => import('./light.js'),
-        shadows: () => import('./shadows.js'),
-        house: () => import('./house.js'),
-        particles: () => import('./particles.js'),
-        galaxy: () => import('./galaxy.js'),
-        raycaster: () => import('./raycaster.js'),
-        physics: () => import('./physics.js'),
-        import: () => import('./import.js'),
-        environmentMap: () => import('./environmentMap.js'),
-        realistic: () => import('./realistic.js'),
-        shader: () => import('./shader/shader.js'),
-        shader1: () => import('./shader/patterns.js'),
-        ragingSea: () => import('./shader/ragingSea.js'),
-        animatedGalaxy: () => import('./shader/galaxy.js'),
-      }
-      const loaded = new Set()
-      let suppressNext = false
-      async function loadForRoute(route) {
-        const load = loaders[route]
-        if (!load) return
-        if (!loaded.has(route)) {
-          try {
-            await load()
-            loaded.add(route)
-          } catch (e) {
-            console.error(e)
-          }
+      </div>
+      <div id="light" class="page">
+        <canvas class="light_webgl"></canvas>
+      </div>
+      <div id="shadows" class="page">
+        <canvas class="shadows_webgl"></canvas>
+      </div>
+      <div id="house" class="page">
+        <canvas class="house_webgl"></canvas>
+      </div>
+      <div id="particles" class="page">
+        <canvas class="particles_webgl"></canvas>
+      </div>
+      <div id="galaxy" class="page">
+        <canvas class="galaxy_webgl"></canvas>
+      </div>
+      <div id="physics" class="page">
+        <canvas class="physics_webgl"></canvas>
+      </div>
+      <div id="import" class="page">
+        <canvas class="import_webgl"></canvas>
+      </div>
+      <div id="raycaster" class="page">
+        <canvas class="raycaster_webgl"></canvas>
+      </div>
+      <div id="environmentMap" class="page">
+        <canvas class="environmentMap_webgl"></canvas>
+      </div>
+      <div id="realistic" class="page">
+        <canvas class="realistic_webgl"></canvas>
+      </div>
+      <div id="shader" class="page">
+        <canvas class="shader_webgl"></canvas>
+      </div>
+      <div id="shader1" class="page">
+        <canvas class="shader1_webgl"></canvas>
+      </div>
+      <div id="ragingSea" class="page">
+        <canvas class="ragingSea_webgl"></canvas>
+      </div>
+      <!-- galaxy -->
+      <div id="animatedGalaxy" class="page">
+        <canvas class="animatedGalaxy_webgl"></canvas>
+      </div>
+    </main>
+  </div>
+  <script type="module">
+    import Router from "./router.js";
+    const router = new Router();
+    const loaders = {
+      text: () => import("./text.js"),
+      light: () => import("./light.js"),
+      shadows: () => import("./shadows.js"),
+      house: () => import("./house.js"),
+      particles: () => import("./particles.js"),
+      galaxy: () => import("./galaxy.js"),
+      raycaster: () => import("./raycaster.js"),
+      physics: () => import("./physics.js"),
+      import: () => import("./import.js"),
+      environmentMap: () => import("./environmentMap.js"),
+      realistic: () => import("./realistic.js"),
+      shader: () => import("./shader/shader.js"),
+      shader1: () => import("./shader/patterns.js"),
+      ragingSea: () => import("./shader/ragingSea.js"),
+      animatedGalaxy: () => import("./shader/galaxy.js"),
+    };
+    const loaded = new Set();
+    let suppressNext = false;
+    async function loadForRoute(route) {
+      const load = loaders[route];
+      if (!load) return;
+      if (!loaded.has(route)) {
+        try {
+          await load();
+          loaded.add(route);
+        } catch (e) {
+          console.error(e);
         }
-        suppressNext = true
-        window.dispatchEvent(new HashChangeEvent('hashchange'))
       }
-      function handleRoute() {
-        if (suppressNext) {
-          suppressNext = false
-          return
-        }
-        const route = window.location.hash.slice(1) || 'home'
-        loadForRoute(route)
+      suppressNext = true;
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    }
+    function handleRoute() {
+      if (suppressNext) {
+        suppressNext = false;
+        return;
       }
-      window.addEventListener('hashchange', handleRoute)
-      window.addEventListener('load', handleRoute)
-    </script>
-  </body>
+      const route = window.location.hash.slice(1) || "home";
+      loadForRoute(route);
+    }
+    window.addEventListener("hashchange", handleRoute);
+    window.addEventListener("load", handleRoute);
+  </script>
+</body>
+
 </html>
