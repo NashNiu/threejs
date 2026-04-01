@@ -16,6 +16,7 @@
     "gsap": "^3.14.2",
     "lil-gui": "^0.20.0",
     "three": "^0.182.0",
+    "three-custom-shader-material": "5.4",
     "vite-plugin-glsl": "^1.5.5"
   }
 }
