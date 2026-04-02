@@ -4,6 +4,9 @@ import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import GUI from "lil-gui";
+import CustomerShaderMaterial from "three-custom-shader-material/vanilla";
+import vertexShader from "./shaders/sliced/vertex.glsl";
+import fragmentShader from "./shaders/sliced/fragment.glsl";
 
 /**
  * Base
@@ -21,7 +24,7 @@ const scene = new THREE.Scene();
 // Loaders
 const rgbeLoader = new RGBELoader();
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("./draco/");
+dracoLoader.setDecoderPath("/43/draco/");
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
@@ -49,10 +52,71 @@ const material = new THREE.MeshStandardMaterial({
   envMapIntensity: 0.5,
   color: "#858080",
 });
+// sliced model
+const uniforms = {
+  uSliceStart: new THREE.Uniform(1.75),
+  uSliceArc: new THREE.Uniform(1.25),
+}
+gui.add(uniforms.uSliceStart, "value").min(-Math.PI).max(Math.PI).step(0.001).name("uSliceStart");
+gui.add(uniforms.uSliceArc, "value").min(0).max(Math.PI * 2).step(0.001).name("uSliceArc");
 
-// Mesh
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+const patchMap = {
+  csm_Slice: {
+    '#include <colorspace_fragment>':
+      `
+      #include <colorspace_fragment>
+       if(!gl_FrontFacing){
+         gl_FragColor = vec4(0.75, 0.15, 0.3, 1.0);
+      }
+    `
+  }
+}
+
+const slicedMaterial = new CustomerShaderMaterial({
+  //csm
+  vertexShader,
+  fragmentShader,
+  baseMaterial: THREE.MeshStandardMaterial,
+  silent: true,
+  uniforms,
+  patchMap,
+  // MeshStandardMaterial
+  metalness: 0.5,
+  roughness: 0.25,
+  envMapIntensity: 0.5,
+  color: "#858080",
+  side: THREE.DoubleSide,
+});
+
+const slicedDepthMaterial = new CustomerShaderMaterial({
+  //csm
+  vertexShader,
+  fragmentShader,
+  baseMaterial: THREE.MeshDepthMaterial,
+  silent: true,
+  uniforms,
+  patchMap,
+  depthPacking: THREE.RGBADepthPacking,
+});
+
+//model
+let model = null;
+gltfLoader.load('/43/gears.glb', (gltf) => {
+  model = gltf.scene;
+  model.traverse((child) => {
+    if (child.isMesh) {
+      if (child.name === "outerHull") {
+        child.material = slicedMaterial;
+        child.customDepthMaterial = slicedDepthMaterial;
+      } else {
+        child.material = material;
+      }
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+  });
+  scene.add(model);
+})
 
 /**
  * Plane
@@ -146,6 +210,11 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Update model
+  if (model) {
+    model.rotation.y = elapsedTime * 0.1;
+  }
 
   // Update controls
   controls.update();
