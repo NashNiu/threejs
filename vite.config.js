@@ -30,6 +30,7 @@ export default {
         particlesMorphing: resolve(__dirname, "src/particlesMorphing/index.html"),
         gpgpuParticles: resolve(__dirname, "src/gpgpu/index.html"),
         wobblySphereShader: resolve(__dirname, "src/wobblySphereShader/index.html"),
+        slicedModelShader: resolve(__dirname, "src/slicedModelShader/index.html"),
       },
     },
   },
