@@ -32,6 +32,7 @@ export default {
         wobblySphereShader: resolve(__dirname, "src/wobblySphereShader/index.html"),
         slicedModelShader: resolve(__dirname, "src/slicedModelShader/index.html"),
         proceduralTerrainShader: resolve(__dirname, "src/proceduralTerrainShader/index.html"),
+        postProcessing: resolve(__dirname, "src/postProcessing/index.html"),
       },
     },
   },
