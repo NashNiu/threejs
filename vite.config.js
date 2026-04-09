@@ -33,6 +33,7 @@ export default {
         slicedModelShader: resolve(__dirname, "src/slicedModelShader/index.html"),
         proceduralTerrainShader: resolve(__dirname, "src/proceduralTerrainShader/index.html"),
         postProcessing: resolve(__dirname, "src/postProcessing/index.html"),
+        performanceTips: resolve(__dirname, "src/performanceTips/index.html"),
       },
     },
   },
