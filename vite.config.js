@@ -35,6 +35,7 @@ export default {
         postProcessing: resolve(__dirname, "src/postProcessing/index.html"),
         performanceTips: resolve(__dirname, "src/performanceTips/index.html"),
         introAndLoading: resolve(__dirname, "src/introAndLoading/index.html"),
+        mixHtmlAndWebgl: resolve(__dirname, "src/mixHtmlAndWebgl/index.html"),
       },
     },
   },
