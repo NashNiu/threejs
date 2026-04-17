@@ -1,7 +1,6 @@
 import restart from "vite-plugin-restart";
 import { resolve } from "path";
 import glsl from "vite-plugin-glsl";
-import react from "@vitejs/plugin-react";
 export default {
   root: "src/", // Sources files (typically where index.html is)
   publicDir: "../static/", // Path from "root" to static assets (files that are served as they are)
@@ -28,37 +27,20 @@ export default {
         halftoneShading: resolve(__dirname, "src/halftoneShading/index.html"),
         earth: resolve(__dirname, "src/earth/index.html"),
         particlesCursor: resolve(__dirname, "src/particlesCursor/index.html"),
-        particlesMorphing: resolve(
-          __dirname,
-          "src/particlesMorphing/index.html",
-        ),
+        particlesMorphing: resolve(__dirname, "src/particlesMorphing/index.html"),
         gpgpuParticles: resolve(__dirname, "src/gpgpu/index.html"),
-        wobblySphereShader: resolve(
-          __dirname,
-          "src/wobblySphereShader/index.html",
-        ),
-        slicedModelShader: resolve(
-          __dirname,
-          "src/slicedModelShader/index.html",
-        ),
-        proceduralTerrainShader: resolve(
-          __dirname,
-          "src/proceduralTerrainShader/index.html",
-        ),
+        wobblySphereShader: resolve(__dirname, "src/wobblySphereShader/index.html"),
+        slicedModelShader: resolve(__dirname, "src/slicedModelShader/index.html"),
+        proceduralTerrainShader: resolve(__dirname, "src/proceduralTerrainShader/index.html"),
         postProcessing: resolve(__dirname, "src/postProcessing/index.html"),
         performanceTips: resolve(__dirname, "src/performanceTips/index.html"),
         introAndLoading: resolve(__dirname, "src/introAndLoading/index.html"),
         mixHtmlAndWebgl: resolve(__dirname, "src/mixHtmlAndWebgl/index.html"),
-        firstReactApplication: resolve(
-          __dirname,
-          "src/react/firstReactApp/src/index.html",
-        ),
       },
     },
   },
   plugins: [
     restart({ restart: ["../static/**"] }), // Restart server on static file change
-    react(),
     glsl({
       include: /\.(glsl|vs|fs|vert|frag)$/,
     }),
