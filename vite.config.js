@@ -53,6 +53,10 @@ export default {
           __dirname,
           "src/react/firstReactApp/src/index.html",
         ),
+        firstR3fApplication: resolve(
+          __dirname,
+          "src/react/firstR3fApp/src/index.html",
+        ),
       },
     },
   },
