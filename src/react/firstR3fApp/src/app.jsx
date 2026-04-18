@@ -10,6 +10,10 @@ export default function App() {
   const groupRef = useRef();
   const { camera, gl } = useThree();
   useFrame((state, delta) => {
+    // const time = state.clock.getElapsedTime();
+    // state.camera.position.x = Math.sin(time) * 10;
+    // state.camera.position.z = Math.cos(time) * 10;
+    // state.camera.lookAt(0, 0, 0)
     cubeRef.current.rotation.y += delta;
     // groupRef.current.rotation.y += delta;
   });
