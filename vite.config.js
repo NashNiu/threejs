@@ -57,6 +57,10 @@ export default {
           __dirname,
           "src/react/firstR3fApp/src/index.html",
         ),
+        dreiApplication: resolve(
+          __dirname,
+          "src/react/drei/src/index.html",
+        ),
       },
     },
   },
