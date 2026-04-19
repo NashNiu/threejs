@@ -61,6 +61,10 @@ export default {
           __dirname,
           "src/react/drei/src/index.html",
         ),
+        debugApplication: resolve(
+          __dirname,
+          "src/react/debug/src/index.html",
+        ),
       },
     },
   },
