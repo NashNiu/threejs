@@ -4,18 +4,13 @@ import {
   useHelper,
   BakeShadows,
   SoftShadows,
+  AccumulativeShadows,
+  RandomizedLight,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
 import * as THREE from "three";
-import { useControls } from "leva"
-
-
-// SoftShadows({
-//   size: 0.005,
-//   near: 9.5,
-//   samples: 17,
-// });
+import { useControls } from "leva";
 
 export default function Experience() {
   const cube = useRef();
@@ -26,20 +21,37 @@ export default function Experience() {
     cube.current.rotation.y += delta * 0.2;
   });
 
-  const { enabled, ...config } = useControls({
-    enabled: true,
-    size: { value: 25, min: 0, max: 100 },
-    focus: { value: 0, min: 0, max: 2 },
-    samples: { value: 10, min: 1, max: 20, step: 1 },
-  });
+  // const { enabled, ...config } = useControls({
+  //   enabled: true,
+  //   size: { value: 25, min: 0, max: 100 },
+  //   focus: { value: 0, min: 0, max: 2 },
+  //   samples: { value: 10, min: 1, max: 20, step: 1 },
+  // });
   return (
     <>
-      {enabled && <SoftShadows {...config} />}
+      {/* {enabled && <SoftShadows {...config} />} */}
       <BakeShadows />
       <Perf position="top-left" />
 
       <OrbitControls makeDefault />
-
+      <AccumulativeShadows
+        color="#316d39"
+        opacity={0.8}
+        position={[0, -0.99, 0]}
+        scale={10}
+        // frames={Infinity}
+        // temporal
+        // blend={100}
+      >
+        <RandomizedLight
+          amount={8}
+          radius={1}
+          // ambient={0.5}
+          // intensity={1}
+          position={[1, 2, 3]}
+          // bias={0.001}
+        />
+      </AccumulativeShadows>
       {/* add to scene */}
       <color args={["ivory"]} attach={"background"} />
       <directionalLight
@@ -67,16 +79,10 @@ export default function Experience() {
         <meshStandardMaterial color="mediumpurple" />
       </mesh>
 
-      <mesh
-        position-y={-1}
-        rotation-x={-Math.PI * 0.5}
-        scale={10}
-        receiveShadow
-      >
+      <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
     </>
   );
 }
-
