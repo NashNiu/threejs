@@ -65,6 +65,10 @@ export default {
           __dirname,
           "src/react/debug/src/index.html",
         ),
+        environmentMapApplication: resolve(
+          __dirname,
+          "src/react/environmentMap/src/index.html",
+        ),
       },
     },
   },
