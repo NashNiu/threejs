@@ -8,12 +8,12 @@ import {
   RandomizedLight,
   ContactShadows,
   Sky,
+  Environment,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
 import * as THREE from "three";
 import { useControls } from "leva";
-import { blur, color } from "three/tsl";
 
 export default function Experience() {
   const cube = useRef();
@@ -39,8 +39,23 @@ export default function Experience() {
   const { sunPosition } = useControls("sky", {
     sunPosition: { value: [1, 2, 3] },
   });
+  const { envMapIntensity } = useControls("environment map", {
+    envMapIntensity: { value: 1, min: 0, max: 10 },
+  });
   return (
     <>
+      <Environment
+        background
+        // files="../public/environmentMaps/the_sky_is_on_fire_2k.hdr"
+        environmentIntensity={envMapIntensity}
+        // preset="sunset"
+      >
+        <color args={["#000000"]} attach={"background"} />
+        {/* <mesh position-z={-5} scale={10}>
+          <planeGeometry />
+          <meshBasicMaterial color={[100, 0, 0]} />
+        </mesh> */}
+      </Environment>
       {/* {enabled && <SoftShadows {...config} />}
       <BakeShadows /> */}
       <Perf position="top-left" />
@@ -77,7 +92,7 @@ export default function Experience() {
         blur={blur}
         frames={1}
       />
-      <directionalLight
+      {/* <directionalLight
         ref={directionalLightRef}
         position={sunPosition}
         intensity={4.5}
@@ -91,7 +106,7 @@ export default function Experience() {
         shadow-camera-left={-5}
       />
       <ambientLight intensity={1.5} />
-      <Sky sunPosition={sunPosition} />
+      <Sky sunPosition={sunPosition} /> */}
       <mesh castShadow position-x={-2}>
         <sphereGeometry />
         <meshStandardMaterial color="orange" />
