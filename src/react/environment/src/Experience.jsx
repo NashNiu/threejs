@@ -7,6 +7,7 @@ import {
   AccumulativeShadows,
   RandomizedLight,
   ContactShadows,
+  Sky,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -35,6 +36,9 @@ export default function Experience() {
     opacity: { value: 0.4, min: 0, max: 1 },
     blur: { value: 2.8, min: 0, max: 10 },
   });
+  const { sunPosition } = useControls("sky", {
+    sunPosition: { value: [1, 2, 3] },
+  });
   return (
     <>
       {/* {enabled && <SoftShadows {...config} />}
@@ -62,7 +66,7 @@ export default function Experience() {
       </AccumulativeShadows> */}
       {/* add to scene */}
       <color args={["ivory"]} attach={"background"} />
-      
+
       <ContactShadows
         position={[0, -0.99, 0]}
         scale={10}
@@ -75,7 +79,7 @@ export default function Experience() {
       />
       <directionalLight
         ref={directionalLightRef}
-        position={[1, 2, 3]}
+        position={sunPosition}
         intensity={4.5}
         castShadow
         shadow-mapSize={[1024 * 2, 1024 * 2]}
@@ -87,7 +91,7 @@ export default function Experience() {
         shadow-camera-left={-5}
       />
       <ambientLight intensity={1.5} />
-
+      <Sky sunPosition={sunPosition} />
       <mesh castShadow position-x={-2}>
         <sphereGeometry />
         <meshStandardMaterial color="orange" />
