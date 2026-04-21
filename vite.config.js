@@ -69,6 +69,10 @@ export default {
           __dirname,
           "src/react/environment/src/index.html",
         ),
+        loadModelApplication: resolve(
+          __dirname,
+          "src/react/loadModel/src/index.html",
+        ),
       },
     },
   },
