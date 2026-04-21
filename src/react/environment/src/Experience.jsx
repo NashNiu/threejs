@@ -9,6 +9,7 @@ import {
   ContactShadows,
   Sky,
   Environment,
+  Lightformer,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -48,9 +49,17 @@ export default function Experience() {
         background
         // files="../public/environmentMaps/the_sky_is_on_fire_2k.hdr"
         environmentIntensity={envMapIntensity}
-        // preset="sunset"
+        preset="sunset"
+        // resolution={32}
       >
-        <color args={["#000000"]} attach={"background"} />
+        {/* <color args={["#000000"]} attach={"background"} />
+        <Lightformer
+          position={[0, 0, -5]}
+          scale={10}
+          color="red"
+          intensity={10}
+          form={"ring"}
+        /> */}
         {/* <mesh position-z={-5} scale={10}>
           <planeGeometry />
           <meshBasicMaterial color={[100, 0, 0]} />
