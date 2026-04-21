@@ -67,7 +67,7 @@ export default {
         ),
         environmentMapApplication: resolve(
           __dirname,
-          "src/react/environmentMap/src/index.html",
+          "src/react/environment/src/index.html",
         ),
       },
     },
