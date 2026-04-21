@@ -9,7 +9,7 @@ const created = (state) => {
 };
 root.render(
   <Canvas
-    shadows
+    shadows={false}
     onCreated={created}
     camera={{
       fov: 45,

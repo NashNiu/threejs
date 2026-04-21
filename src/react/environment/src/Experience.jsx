@@ -18,40 +18,41 @@ export default function Experience() {
   useHelper(directionalLightRef, THREE.DirectionalLightHelper, 1);
 
   useFrame((state, delta) => {
+    // cube.current.position.x = Math.sin(state.clock.getElapsedTime()) + 2;
     cube.current.rotation.y += delta * 0.2;
   });
 
-  // const { enabled, ...config } = useControls({
-  //   enabled: true,
-  //   size: { value: 25, min: 0, max: 100 },
-  //   focus: { value: 0, min: 0, max: 2 },
-  //   samples: { value: 10, min: 1, max: 20, step: 1 },
-  // });
+  const { enabled, ...config } = useControls({
+    enabled: true,
+    size: { value: 25, min: 0, max: 100 },
+    focus: { value: 0, min: 0, max: 2 },
+    samples: { value: 10, min: 1, max: 20, step: 1 },
+  });
   return (
     <>
-      {/* {enabled && <SoftShadows {...config} />} */}
-      <BakeShadows />
+      {/* {enabled && <SoftShadows {...config} />}
+      <BakeShadows /> */}
       <Perf position="top-left" />
 
       <OrbitControls makeDefault />
-      <AccumulativeShadows
+      {/* <AccumulativeShadows
         color="#316d39"
         opacity={0.8}
         position={[0, -0.99, 0]}
         scale={10}
-        // frames={Infinity}
-        // temporal
-        // blend={100}
+        temporal
+        frames={Infinity}
+        blend={100}
       >
         <RandomizedLight
-          amount={8}
+          amount={4}
           radius={1}
-          // ambient={0.5}
-          // intensity={1}
+          ambient={0.5}
+          intensity={1}
           position={[1, 2, 3]}
-          // bias={0.001}
+          bias={0.001}
         />
-      </AccumulativeShadows>
+      </AccumulativeShadows> */}
       {/* add to scene */}
       <color args={["ivory"]} attach={"background"} />
       <directionalLight
