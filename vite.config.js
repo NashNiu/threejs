@@ -73,6 +73,10 @@ export default {
           __dirname,
           "src/react/loadModel/src/index.html",
         ),
+        _3dTextApplication: resolve(
+          __dirname,
+          "src/react/3dText/src/index.html",
+        ),
       },
     },
   },
