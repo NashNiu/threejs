@@ -2,6 +2,9 @@ import { OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import Model from "./model";
 import { Suspense } from "react";
+import Placeholder from "./placeholder";
+import Hamburger from "./hamburger";
+import Fox from "./fox";
 
 export default function Experience() {
   // const model = useLoader(
@@ -20,7 +23,7 @@ export default function Experience() {
 
       <OrbitControls makeDefault />
 
-      <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
+      <directionalLight castShadow position={[1, 2, 3]} intensity={1.5} shadow-normalBias={0.04} />
       <ambientLight intensity={1.5} />
 
       <mesh
@@ -32,16 +35,10 @@ export default function Experience() {
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <Suspense
-        fallback={
-          <mesh position-y={0.5} scale={[2, 3, 3]}>
-            <boxGeometry args={[1, 1, 1, 2, 2, 2]} />
-            <meshBasicMaterial wireframe color="red" />
-          </mesh>
-        }
-      >
-        <Model />
+      <Suspense fallback={<Placeholder position-y={0.5} scale={[2, 3, 3]} />}>
+        <Hamburger scale={[0.35, 0.35, 0.35]} />
       </Suspense>
+      <Fox></Fox>
     </>
   );
 }
