@@ -23,7 +23,7 @@ export default function Experience() {
       <OrbitControls makeDefault />
       <Center>
         <Text3D
-          font="../public/fonts/helvetiker_regular.typeface.json"
+          font="/fonts/helvetiker_regular.typeface.json"
           size={size}
           height={0.2}
           curveSegments={12}
