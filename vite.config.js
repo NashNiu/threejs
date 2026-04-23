@@ -77,6 +77,10 @@ export default {
           __dirname,
           "src/react/3dText/src/index.html",
         ),
+        portalSceneApplication: resolve(
+          __dirname,
+          "src/react/portalScene/src/index.html",
+        ),
       },
     },
   },
