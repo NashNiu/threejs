@@ -81,6 +81,10 @@ export default {
           __dirname,
           "src/react/portalScene/src/index.html",
         ),
+        mouseEventApplication: resolve(
+          __dirname,
+          "src/react/mouseEvent/src/index.html",
+        )
       },
     },
   },
