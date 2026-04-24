@@ -4,10 +4,8 @@ import { useRef } from "react";
 
 export default function Experience() {
   const cube = useRef();
-  const model = useGLTF("../public/hamburger.glb");
-  console.log(model);
+  const model = useGLTF("/models/hamburger.glb");
   const eventHandler = (event) => {
-    console.log(event.point);
     cube.current.material.color.set(`hsl(${Math.random() * 360}, 100%, 75%)`);
   };
 
