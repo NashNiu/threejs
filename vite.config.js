@@ -84,6 +84,10 @@ export default {
         mouseEventApplication: resolve(
           __dirname,
           "src/react/mouseEvent/src/index.html",
+        ),
+         mouseEventApplication: resolve(
+          __dirname,
+          "src/react/postProcessing/src/index.html",
         )
       },
     },

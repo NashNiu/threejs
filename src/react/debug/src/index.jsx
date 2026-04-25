@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 root.render(
     <StrictMode>
-        <Leva  collapsed/>
+        <Leva collapsed />
         <Canvas
             camera={{
                 fov: 45,
