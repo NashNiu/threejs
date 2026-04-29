@@ -9,8 +9,22 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { BlendFunction, GlitchMode } from "postprocessing";
+import Drunk from "./drunk";
+import { useControls } from "leva";
 
 export default function Experience() {
+  const { frequency, amplitude } = useControls("Drunk Effect", {
+    frequency: {
+      value: 2,
+      min: 0,
+      max: 20,
+    },
+    amplitude: {
+      value: 0.1,
+      min: 0,
+      max: 1,
+    },
+  });
   return (
     <>
       <color attach="background" args={["#ffffff"]} />
@@ -41,6 +55,10 @@ export default function Experience() {
           focalLength={0.025}
           bokehScale={6}
         /> */}
+        <Drunk
+          frequency={frequency}
+          amplitude={amplitude}
+        />
       </EffectComposer>
       <Perf position="top-left" />
 
