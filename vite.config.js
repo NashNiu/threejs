@@ -85,10 +85,14 @@ export default {
           __dirname,
           "src/react/mouseEvent/src/index.html",
         ),
-         postProcessingApp: resolve(
+        postProcessingApp: resolve(
           __dirname,
           "src/react/postProcessing/src/index.html",
-        )
+        ),
+        funApplication: resolve(
+          __dirname,
+          "src/react/fun/index.html",
+        ),
       },
     },
   },
