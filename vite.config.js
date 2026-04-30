@@ -91,7 +91,7 @@ export default {
         ),
         funApplication: resolve(
           __dirname,
-          "src/react/fun/src/index.html",
+          "src/react/fun/index.html",
         ),
       },
     },
