@@ -41,7 +41,7 @@ export default function Experience() {
               position={[0, 11.66, -17.4]}
               rotation={[-0.35, 0, 0]}
             >
-              <iframe src="https://threejs-red-zeta.vercel.app/" />
+              <iframe src="https://threejs-demo-ten-ecru.vercel.app/" />
             </Html>
           </primitive>
           <Text
