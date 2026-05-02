@@ -93,6 +93,10 @@ export default {
           __dirname,
           "src/react/fun/index.html",
         ),
+        physicsApplication: resolve(
+          __dirname,
+          "src/react/physics/index.html",
+        ),
       },
     },
   },
