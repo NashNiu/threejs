@@ -4,8 +4,11 @@ import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useGLTF } from "@react-three/drei";
+
 export default function Experience() {
-  const [hitSound] = useState(() => new Audio("/sounds/hit.mp3"));
+  //   const [hitSound] = useState(() => new Audio("/sounds/hit.mp3"));
+  const hamburger = useGLTF("/models/hamburger.glb");
   const cubeRef = useRef(null);
   const twister = useRef(null);
   const cubeJump = () => {
@@ -51,6 +54,15 @@ export default function Experience() {
         </RigidBody>
         <RigidBody
           onCollisionEnter={collisionEnter}
+          onCollisionExit={() => {
+            console.log("collisionExit");
+          }}
+          onSleep={() => {
+            console.log("onSleep");
+          }}
+          onWake={() => {
+            console.log("onWake");
+          }}
           ref={cubeRef}
           position={[1.5, 2, 0]}
           debug
@@ -63,6 +75,9 @@ export default function Experience() {
             <boxGeometry />
             <meshStandardMaterial color="mediumpurple" />
           </mesh>
+        </RigidBody>
+        <RigidBody position={[0, 4, 0]}>
+          <primitive object={hamburger.scene} scale={0.25} />
         </RigidBody>
         {/* <RigidBody colliders={false}>
           <CuboidCollider args={[1, 1, 1]} />
