@@ -43,22 +43,22 @@ export default function Experience() {
     // hitSound.play();
   };
   const cubesRef = useRef();
-  const cubesCount = 3;
-  const cubeTransforms = useMemo(() => {
-    const positions = [];
-    const rotations = [];
-    const scales = [];
+  const cubesCount = 1000;
+  const instances = useMemo(() => {
+    const instances = [];
     for (let i = 0; i < cubesCount; i++) {
-      positions.push([
-        Math.random() * 8 - 4,
-        6 + i * 0.2,
-        Math.random() * 8 - 4,
-      ]);
-      rotations.push([Math.random(), Math.random(), Math.random()]);
-      const scale = 0.2 + Math.random() * 0.8;
-      scales.push([scale, scale, scale]);
+      instances.push({
+        key: "instance_" + Math.random(),
+        position: [Math.random() * 8 - 4, 6 + i * 0.2, Math.random() * 8 - 4],
+        rotation: [Math.random(), Math.random(), Math.random()],
+        scale: [
+          0.2 + Math.random() * 0.8,
+          0.2 + Math.random() * 0.8,
+          0.2 + Math.random() * 0.8,
+        ],
+      });
     }
-    return { positions, rotations, scales };
+    return instances;
   }, []);
   // useEffect(() => {
   //   for (let i = 0; i < cubesCount; i++) {
@@ -80,7 +80,7 @@ export default function Experience() {
 
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
-      <Physics debug gravity={[0, -9.81, 0]}>
+      <Physics gravity={[0, -9.81, 0]}>
         <RigidBody colliders="ball" gravityScale={1}>
           <mesh castShadow position={[-1.5, 2, 0]}>
             <sphereGeometry />
@@ -153,26 +153,19 @@ export default function Experience() {
           <CuboidCollider args={[0.5, 2, 5]} position={[-5.5, 1, 0]} />
         </RigidBody>
         <InstancedRigidBodies
-          positions={cubeTransforms.positions}
-          rotations={cubeTransforms.rotations}
-          scales={cubeTransforms.scales}
           colliders="cuboid"
+          instances={instances}
         >
           <instancedMesh
             ref={cubesRef}
             castShadow
             args={[null, null, cubesCount]}
+            count={cubesCount}
           >
             <boxGeometry />
             <meshStandardMaterial color="tomato" />
           </instancedMesh>
         </InstancedRigidBodies>
-        <RigidBody position={[2, 6, 2]} colliders="cuboid">
-          <mesh>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="cyan" />
-          </mesh>
-        </RigidBody>
       </Physics>
     </>
   );
