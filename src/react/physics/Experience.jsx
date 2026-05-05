@@ -1,7 +1,13 @@
 import { OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
-import { useRef, useState } from "react";
+import {
+  Physics,
+  RigidBody,
+  CuboidCollider,
+  CylinderCollider,
+  InstancedRigidBodies,
+} from "@react-three/rapier";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
@@ -36,6 +42,35 @@ export default function Experience() {
     // hitSound.volume = Math.random();
     // hitSound.play();
   };
+  const cubesRef = useRef();
+  const cubesCount = 3;
+  const cubeTransforms = useMemo(() => {
+    const positions = [];
+    const rotations = [];
+    const scales = [];
+    for (let i = 0; i < cubesCount; i++) {
+      positions.push([
+        Math.random() * 8 - 4,
+        6 + i * 0.2,
+        Math.random() * 8 - 4,
+      ]);
+      rotations.push([Math.random(), Math.random(), Math.random()]);
+      const scale = 0.2 + Math.random() * 0.8;
+      scales.push([scale, scale, scale]);
+    }
+    return { positions, rotations, scales };
+  }, []);
+  // useEffect(() => {
+  //   for (let i = 0; i < cubesCount; i++) {
+  //     const matrix = new THREE.Matrix4();
+  //     matrix.compose(
+  //       new THREE.Vector3(i * 2, 0, 0),
+  //       new THREE.Quaternion(),
+  //       new THREE.Vector3(1, 1, 1),
+  //     );
+  //     cubesRef.current.setMatrixAt(i, matrix);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -76,7 +111,8 @@ export default function Experience() {
             <meshStandardMaterial color="mediumpurple" />
           </mesh>
         </RigidBody>
-        <RigidBody position={[0, 4, 0]}>
+        <RigidBody position={[0, 4, 0]} colliders={false}>
+          <CylinderCollider args={[0.5, 1.25]} />
           <primitive object={hamburger.scene} scale={0.25} />
         </RigidBody>
         {/* <RigidBody colliders={false}>
@@ -107,6 +143,34 @@ export default function Experience() {
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
+          </mesh>
+        </RigidBody>
+        {/* wall */}
+        <RigidBody type="fixed">
+          <CuboidCollider args={[5, 2, 0.5]} position={[0, 1, 5.5]} />
+          <CuboidCollider args={[5, 2, 0.5]} position={[0, 1, -5.5]} />
+          <CuboidCollider args={[0.5, 2, 5]} position={[5.5, 1, 0]} />
+          <CuboidCollider args={[0.5, 2, 5]} position={[-5.5, 1, 0]} />
+        </RigidBody>
+        <InstancedRigidBodies
+          positions={cubeTransforms.positions}
+          rotations={cubeTransforms.rotations}
+          scales={cubeTransforms.scales}
+          colliders="cuboid"
+        >
+          <instancedMesh
+            ref={cubesRef}
+            castShadow
+            args={[null, null, cubesCount]}
+          >
+            <boxGeometry />
+            <meshStandardMaterial color="tomato" />
+          </instancedMesh>
+        </InstancedRigidBodies>
+        <RigidBody position={[2, 6, 2]} colliders="cuboid">
+          <mesh>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="cyan" />
           </mesh>
         </RigidBody>
       </Physics>
