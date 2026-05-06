@@ -97,6 +97,10 @@ export default {
           __dirname,
           "src/react/physics/index.html",
         ),
+        gameApplication: resolve(
+          __dirname,
+          "src/react/game/index.html",
+        ),
       },
     },
   },
