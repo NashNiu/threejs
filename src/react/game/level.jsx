@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { RigidBody } from "@react-three/rapier";
+import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
@@ -170,6 +170,41 @@ export function BlockAxe({ position = [0, 0, 0] }) {
     </group>
   );
 }
+function Bounds({ length = 1 }) {
+  return (
+    <>
+      <RigidBody type="fixed" restitution={0.2} friction={0}>
+        <mesh
+          geometry={boxGeometry}
+          material={wallMaterial}
+          position={[2.15, 0.75, -2 * (length - 1)]}
+          scale={[0.3, 1.5, 4 * length]}
+          castShadow
+        />
+        <mesh
+          geometry={boxGeometry}
+          material={wallMaterial}
+          position={[-2.15, 0.75, -2 * (length - 1)]}
+          scale={[0.3, 1.5, 4 * length]}
+          receiveShadow
+        />
+        <mesh
+          geometry={boxGeometry}
+          material={wallMaterial}
+          position={[0, 0.75, -4 * length + 2]}
+          scale={[4, 1.5, 0.3]}
+          receiveShadow
+        />
+        <CuboidCollider
+          restitution={0.2}
+          friction={1}
+          position={[0, -0.1, -2 * length + 2]}
+          args={[2, 0.1, 2 * length]}
+        />
+      </RigidBody>
+    </>
+  );
+}
 export default function Level({
   count = 15,
   types = [BlockSpinner, BlockLimbo, BlockAxe],
@@ -182,6 +217,7 @@ export default function Level({
         return <Component key={i} position={[0, 0, -(i + 1) * 4]} />;
       })}
       <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+      <Bounds length={count + 2} />
     </>
   );
 }
