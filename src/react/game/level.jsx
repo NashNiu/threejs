@@ -12,7 +12,7 @@ const floor2Material = new THREE.MeshStandardMaterial({ color: "greenyellow" });
 const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "orangered" });
 const wallMaterial = new THREE.MeshStandardMaterial({ color: "slategrey" });
 
-function BlockStart({ position = [0, 0, 0] }) {
+export function BlockStart({ position = [0, 0, 0] }) {
   return (
     <group position={position}>
       <mesh
@@ -25,7 +25,7 @@ function BlockStart({ position = [0, 0, 0] }) {
     </group>
   );
 }
-function BlockEnd({ position = [0, 0, 0] }) {
+export function BlockEnd({ position = [0, 0, 0] }) {
   const model = useGLTF("/models/hamburger.glb");
   model.scene.children.forEach((mesh) => {
     mesh.castShadow = true;
@@ -52,7 +52,7 @@ function BlockEnd({ position = [0, 0, 0] }) {
   );
 }
 
-function BlockSpinner({ position = [0, 0, 0] }) {
+export function BlockSpinner({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const [speed] = useState(
     () => (Math.random() + 0.2) * (Math.random() < 0.5 ? -1 : 1),
@@ -91,7 +91,7 @@ function BlockSpinner({ position = [0, 0, 0] }) {
   );
 }
 
-function BlockLimbo({ position = [0, 0, 0] }) {
+export function BlockLimbo({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const [timeOffset] = useState(() => (Math.random() + 0.2) * (Math.PI * 2));
   useFrame((state) => {
@@ -131,7 +131,7 @@ function BlockLimbo({ position = [0, 0, 0] }) {
   );
 }
 
-function BlockAxe({ position = [0, 0, 0] }) {
+export function BlockAxe({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const [timeOffset] = useState(() => (Math.random() + 0.2) * (Math.PI * 2));
   useFrame((state) => {
@@ -170,14 +170,18 @@ function BlockAxe({ position = [0, 0, 0] }) {
     </group>
   );
 }
-export default function Level() {
+export default function Level({
+  count = 15,
+  types = [BlockSpinner, BlockLimbo, BlockAxe],
+}) {
   return (
     <>
-      <BlockStart position={[0, 0, 16]} />
-      <BlockSpinner position={[0, 0, 12]} />
-      <BlockLimbo position={[0, 0, 8]} />
-      <BlockAxe position={[0, 0, 4]} />
-      <BlockEnd position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 0]} />
+      {Array.from({ length: count }, (_, i) => {
+        const Component = types[Math.floor(Math.random() * types.length)];
+        return <Component key={i} position={[0, 0, -(i + 1) * 4]} />;
+      })}
+      <BlockEnd position={[0, 0, -(count + 1) * 4]} />
     </>
   );
 }
