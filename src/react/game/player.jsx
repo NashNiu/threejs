@@ -1,12 +1,17 @@
 import { RigidBody, useRapier } from "@react-three/rapier";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import * as THREE from "three";
+import useGame from "./stores/useGame";
 
 export default function Player() {
   const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
+  const [smoothedCamera] = useState(() => new THREE.Vector3(10, 10, 10));
+  const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
+  const start = useGame((state) => state.start);
 
   const jump = () => {
     const origin = body.current.translation();
@@ -20,6 +25,7 @@ export default function Player() {
     }
   };
   useEffect(() => {
+    // return a function to unsubscribe the key when the component unmounts
     const unsubscribeKeys = subscribeKeys(
       (state) => state.jump,
       (value) => {
@@ -28,8 +34,12 @@ export default function Player() {
         }
       },
     );
+    const unsubscribeAnyKey = subscribeKeys(() => {
+      start();
+    });
     return () => {
       unsubscribeKeys();
+      unsubscribeAnyKey();
     };
   }, []);
   useFrame((state, delta) => {
@@ -38,6 +48,7 @@ export default function Player() {
     const torque = { x: 0, y: 0, z: 0 };
     const impulseStrength = 0.6 * delta;
     const torqueStrength = 0.2 * delta;
+
     if (forward) {
       impulse.z -= impulseStrength;
       torque.x -= torqueStrength;
@@ -56,6 +67,24 @@ export default function Player() {
     }
     body.current.applyImpulse(impulse);
     body.current.applyTorqueImpulse(torque);
+    /**
+     * camera
+     */
+    const bodyPosition = body.current.translation();
+    const cameraPosition = new THREE.Vector3(
+      bodyPosition.x,
+      bodyPosition.y + 0.65,
+      bodyPosition.z + 2.25,
+    );
+    const cameraTarget = new THREE.Vector3(
+      bodyPosition.x,
+      bodyPosition.y + 0.25,
+      bodyPosition.z,
+    );
+    smoothedCamera.lerp(cameraPosition, 5 * delta);
+    smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+    state.camera.position.copy(smoothedCamera);
+    state.camera.lookAt(smoothedCameraTarget);
   });
   return (
     <RigidBody
@@ -74,4 +103,3 @@ export default function Player() {
     </RigidBody>
   );
 }
-
