@@ -3,12 +3,13 @@ import Level, { BlockAxe, BlockLimbo, BlockSpinner } from "./level.jsx";
 import { Physics } from "@react-three/rapier";
 import Player from "./player.jsx";
 import useGame from "./stores/useGame.js";
+import Effect from "./effect.jsx";
 export default function Experience() {
   const blocksCount = useGame((state) => state.blocksCount);
   const blocksSeed = useGame((state) => state.blocksSeed);
   return (
     <>
-    <color args={['#bdedfc']} attach={'background'} />
+    <color args={['#252731']} attach={'background'} />
       <Physics debug>
         <Lights />
         <Level
@@ -18,6 +19,7 @@ export default function Experience() {
         />
         <Player />
       </Physics>
+      {/* <Effect /> */}
     </>
   );
 }
