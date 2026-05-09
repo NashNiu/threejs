@@ -208,6 +208,7 @@ function Bounds({ length = 1 }) {
 export default function Level({
   count = 15,
   types = [BlockSpinner, BlockLimbo, BlockAxe],
+  seed = 0,
 }) {
   return (
     <>

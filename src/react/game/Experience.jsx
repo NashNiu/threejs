@@ -5,6 +5,7 @@ import Player from "./player.jsx";
 import useGame from "./stores/useGame.js";
 export default function Experience() {
   const blocksCount = useGame((state) => state.blocksCount);
+  const blocksSeed = useGame((state) => state.blocksSeed);
   return (
     <>
       <Physics debug>
@@ -12,6 +13,7 @@ export default function Experience() {
         <Level
           count={blocksCount}
           types={[BlockSpinner, BlockLimbo, BlockAxe]}
+          seed={blocksSeed}
         />
         <Player />
       </Physics>
